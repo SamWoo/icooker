@@ -37,44 +37,67 @@ class _HeathEatPageState extends State<HeathEatPage> {
     return _ret == null
         ? LoadingWidget()
         : Scaffold(
-            appBar: _buildAppBar(),
+          backgroundColor: Colors.grey[300],
             body: RefreshIndicator(
-              child: SingleChildScrollView(
-                child: Stack(
-                  children: <Widget>[
-                    _buildTitle(),
-                    Positioned(
-                      top: -16.0,
-                      child: Container(
-                        // height: 160,
-                        // width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16.0),
-                              topRight: Radius.circular(16.0)),
-                        ),
+              child: Stack(
+                children: <Widget>[
+                  CustomScrollView(
+                    slivers: <Widget>[
+                      SliverToBoxAdapter(
                         child: Column(
-                          children: _dataList.map<Widget>((it) {
-                            return Classfiy(data: it);
-                          }).toList(),
+                          children: <Widget>[
+                            _buildDetail(),
+                            _buildDescItem(_dataList[0]),
+                            _buildDescItem(_dataList[0]),
+                            // _buildDescItem(_dataList[0]),
+                          ],
                         ),
                       ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top),
+                    child: SizedBox(
+                      height: kToolbarHeight,
+                      child: _buildSearch(context),
                     ),
-                  ],
-                ),
+                  )
+                ],
               ),
               onRefresh: _onRefresh,
             ),
           );
   }
 
+  Widget _buildDetail() {
+    return Container(
+      height: 420,
+      child: Stack(
+        children: <Widget>[
+          _buildBackground(),
+          _buildTitle(),
+          _buildDesc(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBackground() {
+    return Container(
+      height: 180,
+      child: Image.asset(
+        'assets/images/scene.jpg',
+        fit: BoxFit.fill,
+      ),
+    );
+  }
+
   Widget _buildTitle() {
     return Container(
-      padding: EdgeInsets.only(top: 12.0, left: 16.0),
-      color: Colors.red,
-      height: 64,
-      width: double.infinity,
+      margin: EdgeInsets.only(top: 100,left: 10.0),
+      // padding: EdgeInsets.only(left: 12.0),
+      color: Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -90,25 +113,49 @@ class _HeathEatPageState extends State<HeathEatPage> {
     );
   }
 
-  Widget _buildAppBar() {
-    return AppBar(
-      // backgroundColor: Colors.white,
-      // toolbarOpacity: 0.1,
-      elevation: 0,
-      title: Container(
-          width: MediaQuery.of(context).size.width * 0.7,
-          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.0), color: Colors.white),
-          child: Row(
-            children: <Widget>[
-              Icon(Icons.search, color: Colors.black54),
-              SizedBox(width: 8.0),
-              Text(_ret['search_default'],
-                  style: TextStyle(
-                      color: Colors.black54, fontSize: ScreenUtil().setSp(42)))
-            ],
-          )),
+  Widget _buildDesc() {
+    return 
+    Container(
+      margin: EdgeInsets.only(top: 150),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.0),
+          topRight: Radius.circular(16.0),
+        ),
+      ),
+      child: Classfiy(data: _dataList[0]),
+    );
+  }
+
+  Widget _buildDescItem(var data){
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+      ),
+      child: Classfiy(data: data),
+    ); 
+  }
+
+  Widget _buildSearch(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.8,
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(4.0),
+      ),
+      child: Row(
+        children: <Widget>[
+          Icon(Icons.search, color: Colors.black54),
+          SizedBox(width: 8.0),
+          Text(_ret['search_default'],
+              style: TextStyle(
+                  color: Colors.black54, fontSize: ScreenUtil().setSp(42)))
+        ],
+      ),
     );
   }
 }

@@ -18,8 +18,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   //底部需要切换的页面
   final List<Widget> _pages = [
     FoodSetPage(),
-    FoodShowPage(),
-    // FoodShowList(data:{'type': '1', 'page': 1, 'id': 7}),
+    // FoodShowPage(),
+    FoodShowList(data:{'type': '1', 'page': 1, 'id': 7}),
     MyPage(),
     HeathEatPage(),
     MyPage(),

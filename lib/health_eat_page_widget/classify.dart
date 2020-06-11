@@ -9,15 +9,20 @@ class Classfiy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('****${data['items']}');
     return Container(
-      height: 120,
+      // width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(vertical:8.0),
+      padding: EdgeInsets.all(10.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
               Image.network(
                 data['icon'],
+                height: 24,
+                width: 24,
                 fit: BoxFit.fill,
               ),
               SizedBox(width: 8.0),
@@ -26,15 +31,18 @@ class Classfiy extends StatelessWidget {
                       fontSize: ScreenUtil().setSp(40), color: Colors.black))
             ],
           ),
-          Text(data['title'],
+          SizedBox(height: 4.0),
+          Text(data['desc'],
               style: TextStyle(
-                  fontSize: ScreenUtil().setSp(24), color: Colors.grey)),
+                  fontSize: ScreenUtil().setSp(32), color: Colors.grey)),
           SizedBox(height: 8.0),
           Container(
-            width: 120,
+            height: 180,
+            color: Colors.blue,
             child: ListView.builder(
+              // shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int indec) =>
+              itemBuilder: (BuildContext context, int index) =>
                   ClassfiyCard(data:data['items']),
               itemCount: data['items'].length,
             ),
