@@ -7,33 +7,40 @@ class Config {
   static const BASE_URL = "https://newapi.meishi.cc";
   //首页推荐
   static const INDEX_HOME_RECOMMEND_URL =
-      '/index/home_recommend_7_1_3?source=android&format=json&fc=msjandroid&lat=0.0&lon=0.0&cityCode&token=';
-  //feeds_tab
+      '/index/home_recommend_7_1_3?source=android&format=json&fc=msjandroid&lat=22.231348&lon=113.27846&cityCode=140&token=';
+  //首页Tab
   static const INDEX_FEEDS_TAB_URL =
-      '/index/feeds_tab_6_9_1?source=android&format=json&fc=msjandroid&lat=0.0&lon=0.0&cityCode&token=';
-  //feeds_classify
+      '/index/feeds_tab_6_9_1?source=android&format=json&fc=msjandroid&lat=22.231348&lon=113.27846&cityCode=140&token=';
+  //首页其他Tab分类详情
   static const INDEX_HOME_FEEDS_CLASSIFY =
-      '/index/home_feeds_classify?source=android&format=json&fc=msjandroid&lat=0.0&lon=0.0&cityCode&token=';
-  //home_feeds
+      '/index/home_feeds_classify?source=android&format=json&fc=msjandroid&lat=22.231348&lon=113.27846&cityCode=140&token=';
+  //首页推荐Tab详情
   static const INDEX_HOME_FEEDS_URL =
-      '/index/home_feeds_7_1_3?source=android&format=json&fc=msjandroid&lat=0.0&lon=0.0&cityCode&token=';
-  //food_show
+      '/index/home_feeds_7_1_3?source=android&format=json&fc=msjandroid&lat=22.231348&lon=113.27846&cityCode=140&token=';
+  //食秀Tab
   static const FOOD_SHOW_TAB_URL =
       '/Foodshow/foodshow_tab?source=android&format=json&fc=msjandroid&lat=22.230139&lon=113.276158&cityCode=140&token=';
+  //食秀Tab对应详情
   static const FOOD_SHOW_DATA_URL =
       '/Foodshow/foodshow_index?source=android&format=json&fc=msjandroid&lat=22.230139&lon=113.276158&cityCode=140&token=';
-  //est_what
+  //吃什么
   static const HEATH_EAT_URL =
       '/scene/index?source=android&format=json&fc=msjandroid&lat=22.231292&lon=113.278356&cityCode=140&token=';
-  //shiping
+  //食评Tab
   static const SHIPING_TAB_URL =
       '/shiping/index_tab?source=android&format=json&fc=msjandroid&lat=22.231348&lon=113.27846&cityCode=140&token=';
-  //shiping_hot
+  //食评最热
   static const SHIPING_HOT_URL =
       '/shiping/index?source=android&format=json&fc=msjandroid&lat=22.231348&lon=113.27846&cityCode=140&token=';
-  //shiping_time
+  //食评最新
   static const SHIPING_TIME_URL =
       '/shiping/index?source=android&format=json&fc=msjandroid&lat=22.231348&lon=113.27846&cityCode=140&token=';
+  //菜谱详情
+  static const RECIPE_DETAIL_URL =
+      '/recipe/detail?source=android&format=json&fc=msjandroid&lat=22.231293&lon=113.278299&cityCode=140&token=';
+  //生活技巧详情
+  static const KNOWLEDGE_DETAIL_URL =
+      '/Knowledge/detail?source=android&format=json&fc=msjandroid&lat=22.231348&lon=113.27846&cityCode=140&token=';
 
   //连接服务器超时时间
   static const CONNECT_TIMEOUT = 10 * 1000;

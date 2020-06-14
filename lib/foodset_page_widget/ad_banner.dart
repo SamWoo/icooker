@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class AdBanner extends StatelessWidget {
-  final _data;
-  const AdBanner(this._data);
+  final data;
+  const AdBanner({this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +21,15 @@ class AdBanner extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 8.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.network(_data[index]['img'],
+              child: Image.network(data[index]['img'],
                   width: width, height: height, fit: BoxFit.fill),
             ),
           );
         },
-        itemCount: _data.length,
+        itemCount: data.length,
         scrollDirection: Axis.horizontal,
         autoplay: true,
-        pagination: new SwiperPagination(),
+        pagination: SwiperPagination(),
         // control: new SwiperControl(),
       ),
     );

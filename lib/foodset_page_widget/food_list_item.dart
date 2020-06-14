@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:icooker/router/routes.dart';
+import 'package:icooker/services/services_method.dart';
+import 'dart:convert' as convert;
 
 class TileCard extends StatelessWidget {
   final data;
@@ -15,6 +18,9 @@ class TileCard extends StatelessWidget {
     var author;
     var viewed_amount;
     var favor_amount;
+    var ratio = (data['wh_ratio'] is String)
+        ? double.parse(data['wh_ratio'])
+        : double.parse(data['wh_ratio'].toString()); //图片的宽高比
 
     if (data['video_article'] != null) {
       img = data['video_article']['img'];
@@ -48,7 +54,13 @@ class TileCard extends StatelessWidget {
 
     return Card(
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          var data = {"id": id};
+          getRecipeDetail(data).then((val) {
+            Routes.navigateTo(context, '/recipeDetail',
+                params: {'data': convert.jsonEncode(val)});
+          });
+        },
         //点击时出现水波纹效果
         splashColor: Colors.deepOrange.withOpacity(0.3),
         highlightColor: Colors.deepOrange.withOpacity(0.1),
@@ -56,7 +68,7 @@ class TileCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            _buildImg(context, img),
+            _buildImg(context, img, id, ratio),
             _buildDesc(title, author, viewed_amount, favor_amount),
           ],
         ),
@@ -64,28 +76,29 @@ class TileCard extends StatelessWidget {
     );
   }
 
-  Widget _buildImg(BuildContext context, var imgUrl) {
+  Widget _buildImg(BuildContext context, var imgUrl, var id, var ratio) {
     var _itemWidth = MediaQuery.of(context).size.width - 16 / 2;
-    return Container(
-      child: ClipRRect(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(4.0),
-          topRight: Radius.circular(4.0),
-        ),
-        child: CachedNetworkImage(
-          imageUrl: imgUrl,
-          fit: BoxFit.cover,
-          placeholder: (context, url) => Container(
-              width: _itemWidth,
-              child: AspectRatio(
-                aspectRatio: double.parse(data['wh_ratio']),
+    return Hero(
+        tag: id,
+        child: Container(
+          width: _itemWidth,
+          // height: _itemWidth * ratio,
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(4.0),
+              topRight: Radius.circular(4.0),
+            ),
+            child: CachedNetworkImage(
+              imageUrl: imgUrl,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Container(
                 child: Image.asset('assets/images/placeholder.png',
                     fit: BoxFit.fill),
-              )),
-          errorWidget: (context, url, error) => Icon(Icons.error),
-        ),
-      ),
-    );
+              ),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
+          ),
+        ));
   }
 
   Widget _buildDesc(var title, var author, var views, var favor) {
@@ -115,9 +128,7 @@ class TileCard extends StatelessWidget {
     );
   }
 
-  Widget _buildAuthor(
-    var author,
-  ) {
+  Widget _buildAuthor(var author) {
     return Row(
       children: <Widget>[
         CircleAvatar(

@@ -6,7 +6,8 @@ class Routes {
   static Router router;
 
   static String root = '/';
-  static String setting='/setting';
+  static String setting = '/setting';
+  static String recipeDetail = '/recipeDetail';
 
   static void configureRouters(Router router) {
     router.notFoundHandler = Handler(
@@ -16,6 +17,7 @@ class Routes {
     });
 
     router.define(setting, handler: settingHandler);
+    router.define(recipeDetail, handler: recipeDetailHandler);
   }
 
   // 对参数进行encode，解决参数中有特殊字符，影响fluro路由匹配

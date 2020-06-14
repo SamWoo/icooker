@@ -97,7 +97,7 @@ class _ShowState extends State<Show> {
           ),
         ),
         backgroundColor: Colors.white,
-        elevation: 1,
+        // elevation: 1,
         centerTitle: true,
       ),
       preferredSize: Size.fromHeight(50),

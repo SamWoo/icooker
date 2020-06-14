@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icooker/food_show_page_widget/food_show_list.dart';
-import 'package:icooker/pages/food_set_page.dart';
+import 'package:icooker/pages/food_set_page2.dart';
 import 'package:icooker/pages/food_show_page.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 import 'heath_eat_page.dart';
 import 'my_page.dart';
@@ -18,8 +19,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   //底部需要切换的页面
   final List<Widget> _pages = [
     FoodSetPage(),
-    // FoodShowPage(),
-    FoodShowList(data:{'type': '1', 'page': 1, 'id': 7}),
+    FoodShowPage(),
+    // FoodShowList(data:{'type': '1', 'page': 1, 'id': 7}),
     MyPage(),
     HeathEatPage(),
     MyPage(),
@@ -28,23 +29,23 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   //底部导航item的文字和图片
   final List<BottomNavigationBarItem> tabs = [
     BottomNavigationBarItem(
-      icon: Icon(Icons.home),
+      icon: Icon(FontAwesome.home),
       title: Text('食集'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.business),
+      icon: Icon(FontAwesome.gift),
       title: Text('食秀'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.bookmark),
+      icon: Icon(FontAwesome.smile_o),
       title: Text('食记'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.cake),
+      icon: Icon(FontAwesome.question_circle_o),
       title: Text('吃什么'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.account_circle),
+      icon: Icon(FontAwesome.github),
       title: Text('我的'),
     ),
   ];
@@ -71,7 +72,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
     // 方式三：设置宽度750px，高度1334px，根据系统字体进行缩放
     // ScreenUtil.init(context, width: 1080, height: 1920, allowFontScaling: true);
     return Scaffold(
-      // body: _pageList[_currentIndex],
+      // body: _pages[_currentIndex],
       body: IndexedStack(
         index: _currentIndex,
         children: _pages,
@@ -82,9 +83,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
         onTap: _onTapHandler,
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
-        fixedColor: Colors.white,
-        unselectedItemColor: Colors.blueGrey,
-        backgroundColor: Theme.of(context).primaryColor,
+        fixedColor: Colors.red,
+        unselectedItemColor: Colors.black87,
+        backgroundColor: Colors.white,
       ),
     );
   }

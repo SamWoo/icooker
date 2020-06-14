@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Channel extends StatelessWidget {
   final data;
-  const Channel(this.data);
+  const Channel({this.data});
 
   @override
   Widget build(BuildContext context) {

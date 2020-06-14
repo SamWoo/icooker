@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,6 +9,7 @@ import 'package:icooker/foodset_page_widget/food_list.dart';
 import 'package:icooker/foodset_page_widget/meals.dart';
 import 'package:icooker/foodset_page_widget/recommend.dart';
 import 'package:icooker/services/services_method.dart';
+import 'package:icooker/widgets/footer_tip.dart';
 import 'package:icooker/widgets/loading_widget.dart';
 
 class FoodSetPage extends StatefulWidget {
@@ -18,8 +21,12 @@ class FoodSetPage extends StatefulWidget {
 
 class _FoodSetPageState extends State<FoodSetPage>
     with SingleTickerProviderStateMixin {
-  ScrollController _scrollController;
+  static ScrollController _scrollController =
+      ScrollController(initialScrollOffset: 0.0);
   TabController _tabController;
+  var pageCount = 2;
+  var page;
+  var data;
 
   var _tabTitles = [
     Tab(text: '推荐'),
@@ -44,15 +51,15 @@ class _FoodSetPageState extends State<FoodSetPage>
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController(initialScrollOffset: 0.0);
+
     _tabController = TabController(length: _tabTitles.length, vsync: this);
 
     //服务器获取数据
     getHomeRecommend().then((val) {
+      //推荐数据
       setState(() {
         _recommendData = val;
       });
-      // print('>>>>>>>>> $_recommendData');
     });
   }
 
@@ -70,18 +77,13 @@ class _FoodSetPageState extends State<FoodSetPage>
       appBar: _buildAppBar(),
       body: _recommendData == null
           ? LoadingWidget()
-          : NestedScrollView(
-              // controller: _scrollController,
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  _buildSliverAppBar(),
-                ];
-              },
-              body: TabBarView(
-                controller: _tabController,
-                children: _foodList,
-              ),
+          : CustomScrollView(
+              controller: _scrollController,
+              slivers: <Widget>[
+                _buildRecommend(),
+                _buildPersistentHeader(),
+                _buildSliverBody(),
+              ],
             ),
     );
   }
@@ -134,60 +136,71 @@ class _FoodSetPageState extends State<FoodSetPage>
     );
   }
 
-  Widget _buildSliverAppBar() {
-    return SliverAppBar(
-      elevation: 0,
-      pinned: true,
-      floating: true,
-      expandedHeight: ScreenUtil().setHeight(2000), //展开高度，必选项
-      flexibleSpace: FlexibleSpaceBar(
-        collapseMode: CollapseMode.pin,
-        background: Container(
-          height: double.infinity,
-          color: Colors.white,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+  Widget _buildRecommend() {
+    return SliverToBoxAdapter(
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
 //              SizedBox(height: 10.0),
 //              _slogan(),
-              SizedBox(height: 10.0),
-              RecommendData(data:_recommendData[1]['video_info']),
-              SizedBox(height: 10.0),
-              Channel(data:_recommendData[2]['channel']),
-              SizedBox(height: 10.0),
-              // Meals(_recommendData[3]['sancan']),
-              // SizedBox(height: 10.0),
-              AdBanner(data:_recommendData[4]['zhuanti']),
-              SizedBox(height: 10.0),
-            ],
-          ),
+            SizedBox(height: 10.0),
+            RecommendData(data: _recommendData[1]['video_info']),
+            SizedBox(height: 10.0),
+            Channel(data: _recommendData[2]['channel']),
+            SizedBox(height: 10.0),
+            Meals(_recommendData[3]['sancan']),
+            SizedBox(height: 10.0),
+            AdBanner(data: _recommendData[4]['zhuanti']),
+            SizedBox(height: 10.0),
+          ],
         ),
       ),
-      bottom: PreferredSize(
-        //修改TabBar吸顶后的背景颜色和高度
-        child: Material(
-          color: Colors.white,
-          child: TabBar(
-            controller: _tabController,
-            tabs: _tabTitles,
-            labelColor: Colors.red,
-            labelPadding: EdgeInsets.symmetric(horizontal: 2.0),
-            labelStyle: TextStyle(
-              fontSize: ScreenUtil().setSp(42),
-              // color: Colors.black,
-              fontWeight: FontWeight.bold,
+    );
+  }
+
+  Widget _buildPersistentHeader() {
+    return SliverPersistentHeader(
+      pinned: true,
+      delegate: _SliverDelegate(
+        minHeight: 50,
+        maxHeight: 50,
+        child: PreferredSize(
+          //修改TabBar吸顶后的背景颜色和高度
+          child: Material(
+            color: Colors.white,
+            child: TabBar(
+              controller: _tabController,
+              tabs: _tabTitles,
+              labelColor: Colors.red,
+              labelPadding: EdgeInsets.symmetric(horizontal: 2.0),
+              labelStyle: TextStyle(
+                fontSize: ScreenUtil().setSp(42),
+                // color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+              unselectedLabelColor: Colors.black54,
+              unselectedLabelStyle: TextStyle(
+                fontSize: ScreenUtil().setSp(36),
+                // color: Colors.black54,
+              ),
+              indicatorColor: Colors.red,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorWeight: 4.0,
             ),
-            unselectedLabelColor: Colors.black54,
-            unselectedLabelStyle: TextStyle(
-              fontSize: ScreenUtil().setSp(36),
-              // color: Colors.black54,
-            ),
-            indicatorColor: Colors.red,
-            indicatorSize: TabBarIndicatorSize.label,
-            indicatorWeight: 4.0,
           ),
+          preferredSize: Size.fromHeight(50),
         ),
-        preferredSize: Size.fromHeight(50),
+      ),
+    );
+  }
+
+  Widget _buildSliverBody() {
+    return SliverFillRemaining(
+      child: TabBarView(
+        controller: _tabController,
+        children: _foodList,
       ),
     );
   }
@@ -209,5 +222,36 @@ class _FoodSetPageState extends State<FoodSetPage>
         ),
       ),
     );
+  }
+}
+
+class _SliverDelegate extends SliverPersistentHeaderDelegate {
+  _SliverDelegate(
+      {@required this.minHeight,
+      @required this.maxHeight,
+      @required this.child});
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+
+  @override
+  Widget build(
+          BuildContext context, double shrinkOffset, bool overlapsContent) =>
+      SizedBox.expand(
+        child: child,
+      );
+
+  @override
+  double get maxExtent => max(minHeight, maxHeight);
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  bool shouldRebuild(_SliverDelegate oldDelegate) {
+    //是否需要重建
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:icooker/services/services_method.dart';
-import 'package:icooker/widgets/footer_tip.dart';
 import 'package:icooker/widgets/loading_widget.dart';
 
 import 'food_list_item.dart';
@@ -34,7 +33,6 @@ class _FoodListState extends State<FoodList>
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    // type = widget.data['type'];
     data = widget.data;
     page = data['page'];
 
@@ -93,7 +91,7 @@ class _FoodListState extends State<FoodList>
               ? LoadingWidget()
               : StaggeredGridView.countBuilder(
                   primary: false,
-                  // physics: NeverScrollableScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   shrinkWrap: true,
                   controller: _scrollController,
                   crossAxisCount: 4,

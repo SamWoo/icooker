@@ -70,7 +70,7 @@ Future getFoodShowData(data) async {
   if (response.statusCode == 200) {
     // print(json.decode(response.data));
     _dataList = json.decode(response.data)['data']['items'] as List;
-    print('dataList--->$_dataList');
+    // print('dataList--->$_dataList');
     return _dataList;
   } else {
     throw Exception('服务器接口有问题!');
@@ -85,6 +85,23 @@ Future getHealthEatData() async{
   var url = Config.HEATH_EAT_URL;
   
   response = await HttpManager.getInstance().post(url);
+  if (response.statusCode == 200) {
+    // print(json.decode(response.data));
+    var ret = json.decode(response.data)['data'];
+    print('ret--->$ret');
+    return ret;
+  } else {
+    throw Exception('服务器接口有问题!');
+  }
+}
+
+/**
+ * 获取菜谱详情数据
+ */
+Future getRecipeDetail(var data)async{
+  Response response;
+  var url = Config.RECIPE_DETAIL_URL;
+  response = await HttpManager.getInstance().post(url,data:data);
   if (response.statusCode == 200) {
     // print(json.decode(response.data));
     var ret = json.decode(response.data)['data'];
