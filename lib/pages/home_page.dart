@@ -5,6 +5,7 @@ import 'package:icooker/pages/food_set_page2.dart';
 import 'package:icooker/pages/food_show_page.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
+import 'food_reviews_page.dart';
 import 'heath_eat_page.dart';
 import 'my_page.dart';
 
@@ -21,7 +22,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
     FoodSetPage(),
     FoodShowPage(),
     // FoodShowList(data:{'type': '1', 'page': 1, 'id': 7}),
-    MyPage(),
+    FoodReviewsPage(),
     HeathEatPage(),
     MyPage(),
   ];

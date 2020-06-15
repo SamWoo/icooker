@@ -14,11 +14,11 @@ class AdBanner extends StatelessWidget {
     return Container(
       width: width,
       height: height,
+      padding: EdgeInsets.symmetric(vertical:8.0,horizontal:8.0),
       color: Colors.transparent,
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            margin: EdgeInsets.symmetric(horizontal: 8.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(data[index]['img'],

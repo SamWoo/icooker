@@ -25,7 +25,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
     _scrollController = ScrollController();
     _scrollController.addListener(() {
       var val = _scrollController.position.pixels > 100.0 ? true : false;
-      var tmp = _scrollController.position.pixels / 200.0;
+      var tmp = _scrollController.position.pixels / 400.0;
 
       setState(() {
         isShow = val;
@@ -84,12 +84,18 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.grey[700],
+            ),
             onPressed: () => Navigator.of(context).pop(),
           ),
           isShow ? _buildBarTitle() : Text(''),
           IconButton(
-            icon: Icon(Icons.more_horiz),
+            icon: Icon(
+              Icons.more_horiz,
+              color: Colors.grey[700],
+            ),
             onPressed: () {},
           ),
         ],

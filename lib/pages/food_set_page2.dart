@@ -9,7 +9,6 @@ import 'package:icooker/foodset_page_widget/food_list.dart';
 import 'package:icooker/foodset_page_widget/meals.dart';
 import 'package:icooker/foodset_page_widget/recommend.dart';
 import 'package:icooker/services/services_method.dart';
-import 'package:icooker/widgets/footer_tip.dart';
 import 'package:icooker/widgets/loading_widget.dart';
 
 class FoodSetPage extends StatefulWidget {
@@ -143,17 +142,11 @@ class _FoodSetPageState extends State<FoodSetPage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-//              SizedBox(height: 10.0),
 //              _slogan(),
-            SizedBox(height: 10.0),
             RecommendData(data: _recommendData[1]['video_info']),
-            SizedBox(height: 10.0),
             Channel(data: _recommendData[2]['channel']),
-            SizedBox(height: 10.0),
             Meals(_recommendData[3]['sancan']),
-            SizedBox(height: 10.0),
             AdBanner(data: _recommendData[4]['zhuanti']),
-            SizedBox(height: 10.0),
           ],
         ),
       ),

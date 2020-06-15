@@ -1,12 +1,185 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-class Meals extends StatelessWidget {
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:icooker/config/Config.dart';
+import 'package:icooker/router/routes.dart';
+import 'package:icooker/services/services_method.dart';
+import 'dart:convert' as convert;
+
+class Meals extends StatefulWidget {
   final data;
-  const Meals(this.data);
+  Meals(this.data);
+
+  @override
+  _MealsState createState() => _MealsState();
+}
+
+class _MealsState extends State<Meals> with SingleTickerProviderStateMixin {
+  PageController mPageController = PageController(initialPage: 0);
+  TabController mTabController;
+  var _data;
+  var currentPage = 0;
+  var isPageCanChanged = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _data = widget.data;
+    mTabController = TabController(length: _data.length, vsync: this);
+    mTabController.addListener(() {
+      if (mTabController.indexIsChanging) {
+        print('tab_index====>${mTabController.index}');
+        onPageChange(mTabController.index, p: mPageController);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    mTabController.dispose();
+    mPageController.dispose();
+  }
+
+  onPageChange(int index, {PageController p, TabController t}) async {
+    if (p != null) {
+      isPageCanChanged = false;
+      await mPageController.animateToPage(index,
+          duration: Duration(milliseconds: 200), curve: Curves.ease);
+      isPageCanChanged = true;
+    } else {
+      mTabController.animateTo(index);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: null,
+      height: ScreenUtil().setHeight(900),
+      // color: Colors.blue,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildPageTitles(),
+          Expanded(child: _buildPageView())
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPageTitles() {
+    //PageView标题
+    return Container(
+      alignment: Alignment.center,
+      height: 36,
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 4.0),
+      child: TabBar(
+        tabs: _data.map<Widget>((it) {
+          return Tab(text: it['title']);
+        }).toList(),
+        isScrollable: true,
+        controller: mTabController,
+        labelColor: Color(0xffff0000),
+        labelStyle: TextStyle(
+          fontSize: ScreenUtil().setSp(56),
+          fontWeight: FontWeight.bold,
+        ),
+        unselectedLabelColor: Colors.grey[600],
+        unselectedLabelStyle: TextStyle(
+          fontSize: ScreenUtil().setSp(48),
+        ),
+        indicatorSize: TabBarIndicatorSize.label,
+      ),
+    );
+  }
+
+  Widget _buildPageView() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 4.0),
+      child: PageView.builder(
+        controller: mPageController,
+        itemCount: _data.length,
+        itemBuilder: _buildItem,
+        onPageChanged: (index) {
+          print('index===>$index');
+          if (isPageCanChanged) {
+            onPageChange(index);
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildItem(BuildContext context, int index) {
+    var items = _data[index]['items'];
+    var itemWidth = (MediaQuery.of(context).size.width - 24) / 2;
+    var itemHeight = itemWidth * 1.3;
+    return Container(
+      // color: Colors.yellow,
+      padding: EdgeInsets.symmetric(horizontal: 4.0),
+      child: Flex(
+        direction: Axis.horizontal,
+        children: items.map<Widget>((it) {
+          return GestureDetector(
+            onTap: () {
+              var data = {"id": it['id']};
+              getDetail(Config.RECIPE_DETAIL_URL,data:data).then((val) {
+                Routes.navigateTo(context, '/recipeDetail',
+                    params: {'data': convert.jsonEncode(val)});
+              });
+            },
+            child: Container(
+              // color: Colors.green,
+              margin: EdgeInsets.symmetric(horizontal: 4.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    width: itemWidth,
+                    height: itemHeight,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: CachedNetworkImage(
+                        imageUrl: it['img'],
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Image.asset(
+                            'assets/images/placeholder.png',
+                            fit: BoxFit.cover),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: ScreenUtil().setWidth(480),
+                    padding: EdgeInsets.symmetric(vertical: 4.0),
+                    child: Text(
+                      it['title'],
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: ScreenUtil().setSp(40),
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    width: itemWidth,
+                    padding: EdgeInsets.all(4.0),
+                    color: Color(0xfff4cbcb),
+                    child: Text(
+                      '# ${it['desc']}',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Color(0xfff77e7e),
+                        fontSize: ScreenUtil().setSp(30),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }

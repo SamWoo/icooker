@@ -10,7 +10,7 @@ class Channel extends StatelessWidget {
     var itemWidth = (MediaQuery.of(context).size.width - 8) / 4;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 4.0),
-      // color: Colors.blue,
+      // color: Colors.yellow,
       child: Wrap(
         // mainAxisAlignment: MainAxisAlignment.center,
         // spacing: 2.0,

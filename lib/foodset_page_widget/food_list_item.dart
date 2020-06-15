@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:icooker/config/Config.dart';
 import 'package:icooker/router/routes.dart';
 import 'package:icooker/services/services_method.dart';
 import 'dart:convert' as convert;
@@ -16,8 +17,8 @@ class TileCard extends StatelessWidget {
     var title;
     var id;
     var author;
-    var viewed_amount;
-    var favor_amount;
+    var viewedAmount;
+    var favorAmount;
     var ratio = (data['wh_ratio'] is String)
         ? double.parse(data['wh_ratio'])
         : double.parse(data['wh_ratio'].toString()); //图片的宽高比
@@ -27,36 +28,36 @@ class TileCard extends StatelessWidget {
       title = data['video_article']['title'];
       id = data['video_article']['id'];
       author = data['video_article']['author'];
-      favor_amount = data['video_article']['favor_amount'];
-      viewed_amount = data['video_article']['viewed_amount'];
+      favorAmount = data['video_article']['favor_amount'];
+      viewedAmount = data['video_article']['viewed_amount'];
     } else if (data['video_recipe'] != null) {
       img = data['video_recipe']['img'];
       title = data['video_recipe']['title'];
       id = data['video_recipe']['id'];
       author = data['video_recipe']['author'];
-      viewed_amount = data['video_recipe']['viewed_amount'];
-      favor_amount = data['video_recipe']['favor_amount'];
+      viewedAmount = data['video_recipe']['viewed_amount'];
+      favorAmount = data['video_recipe']['favor_amount'];
     } else if (data['recipe'] != null) {
       img = data['recipe']['img'];
       title = data['recipe']['title'];
       id = data['recipe']['id'];
       author = data['recipe']['author'];
-      viewed_amount = data['recipe']['viewed_amount'];
-      favor_amount = data['recipe']['favor_amount'];
+      viewedAmount = data['recipe']['viewed_amount'];
+      favorAmount = data['recipe']['favor_amount'];
     } else if (data['works'] != null) {
       img = data['works']['img'];
       title = data['works']['title'];
       id = data['works']['id'];
       author = data['works']['author'];
-      viewed_amount = data['works']['viewed_amount'];
-      favor_amount = data['works']['favor_amount'];
+      viewedAmount = data['works']['viewed_amount'];
+      favorAmount = data['works']['favor_amount'];
     }
 
     return Card(
       child: InkWell(
         onTap: () {
           var data = {"id": id};
-          getRecipeDetail(data).then((val) {
+          getDetail(Config.RECIPE_DETAIL_URL, data:data).then((val) {
             Routes.navigateTo(context, '/recipeDetail',
                 params: {'data': convert.jsonEncode(val)});
           });
@@ -69,7 +70,7 @@ class TileCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             _buildImg(context, img, id, ratio),
-            _buildDesc(title, author, viewed_amount, favor_amount),
+            _buildDesc(title, author, viewedAmount, favorAmount),
           ],
         ),
       ),
@@ -77,12 +78,11 @@ class TileCard extends StatelessWidget {
   }
 
   Widget _buildImg(BuildContext context, var imgUrl, var id, var ratio) {
-    var _itemWidth = MediaQuery.of(context).size.width - 16 / 2;
+    var _itemWidth = (MediaQuery.of(context).size.width - 16) / 2;
     return Hero(
         tag: id,
         child: Container(
           width: _itemWidth,
-          // height: _itemWidth * ratio,
           child: ClipRRect(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(4.0),

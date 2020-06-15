@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:icooker/config/Config.dart';
+import 'package:icooker/router/routes.dart';
+import 'package:icooker/services/services_method.dart';
+import 'dart:convert' as convert;
 
 class RecommendData extends StatelessWidget {
   final data;
@@ -11,9 +15,10 @@ class RecommendData extends StatelessWidget {
     return Container(
       height: ScreenUtil().setHeight(880),
       width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),
       child: ListView.builder(
         itemBuilder: (BuildContext context, int index) {
-          return _buildItem(data[index]);
+          return _buildItem(context, data[index]);
         },
         scrollDirection: Axis.horizontal,
         itemCount: data.length,
@@ -21,29 +26,38 @@ class RecommendData extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(var item) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.0),
-      child: Stack(
-        children: <Widget>[
-          _buildItemImage(item),
-          Positioned(
-            top: 10.0,
-            left: 10.0,
-            child: Text(
-              item['recommend_title'],
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
+  Widget _buildItem(BuildContext context, var item) {
+    return GestureDetector(
+      onTap: () {
+        var data = {"id": item['id']};
+        getDetail(Config.RECIPE_DETAIL_URL,data:data).then((val) {
+          Routes.navigateTo(context, '/recipeDetail',
+              params: {'data': convert.jsonEncode(val)});
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 4.0),
+        child: Stack(
+          children: <Widget>[
+            _buildItemImage(item),
+            Positioned(
+              top: 10.0,
+              left: 10.0,
+              child: Text(
+                item['recommend_title'],
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 10.0,
-            left: 10.0,
-            child: _buildInfo(item),
-          ),
-        ],
+            Positioned(
+              bottom: 10.0,
+              left: 10.0,
+              child: _buildInfo(item),
+            ),
+          ],
+        ),
       ),
     );
   }

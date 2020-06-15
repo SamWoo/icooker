@@ -27,7 +27,9 @@ Future getFoodSetData(data) async {
   Response response;
   List _dataList = [];
   var type = data['type'];
-  var url=type.isEmpty?Config.INDEX_HOME_FEEDS_URL:Config.INDEX_HOME_FEEDS_CLASSIFY;
+  var url = type.isEmpty
+      ? Config.INDEX_HOME_FEEDS_URL
+      : Config.INDEX_HOME_FEEDS_CLASSIFY;
 
   response = await HttpManager.getInstance().post(url, data: data);
   if (response.statusCode == 200) {
@@ -50,7 +52,7 @@ Future getFoodSetData(data) async {
 }
 
 //获取食秀界面的Tab
-Future getFoodShowTab(type) async {
+Future getFoodShowTab(var type) async {
   Response response;
   response = await HttpManager.getInstance()
       .post(Config.FOOD_SHOW_TAB_URL, data: {'type': type});
@@ -61,11 +63,11 @@ Future getFoodShowTab(type) async {
 /**
  * 获取首页展示数据
  */
-Future getFoodShowData(data) async {
+Future getFoodShowData(var data) async {
   Response response;
   List _dataList = [];
   var url = Config.FOOD_SHOW_DATA_URL;
-  
+
   response = await HttpManager.getInstance().post(url, data: data);
   if (response.statusCode == 200) {
     // print(json.decode(response.data));
@@ -80,10 +82,9 @@ Future getFoodShowData(data) async {
 /**
  * 获取健康饮食数据
  */
-Future getHealthEatData() async{
+Future getHealthEatData() async {
   Response response;
   var url = Config.HEATH_EAT_URL;
-  
   response = await HttpManager.getInstance().post(url);
   if (response.statusCode == 200) {
     // print(json.decode(response.data));
@@ -96,12 +97,12 @@ Future getHealthEatData() async{
 }
 
 /**
- * 获取菜谱详情数据
+ * 获取菜谱或食评详情数据
  */
-Future getRecipeDetail(var data)async{
+Future getDetail(var url, {var data}) async {
   Response response;
-  var url = Config.RECIPE_DETAIL_URL;
-  response = await HttpManager.getInstance().post(url,data:data);
+  // var url = Config.RECIPE_DETAIL_URL;
+  response = await HttpManager.getInstance().post(url, data: data);
   if (response.statusCode == 200) {
     // print(json.decode(response.data));
     var ret = json.decode(response.data)['data'];
@@ -111,3 +112,4 @@ Future getRecipeDetail(var data)async{
     throw Exception('服务器接口有问题!');
   }
 }
+
