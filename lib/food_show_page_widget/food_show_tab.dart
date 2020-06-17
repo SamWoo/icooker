@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:icooker/config/Config.dart';
 import 'package:icooker/services/services_method.dart';
 import 'package:icooker/widgets/loading_widget.dart';
 
@@ -29,16 +30,19 @@ class _ShowState extends State<Show> {
   void initState() {
     super.initState();
 
-    getFoodShowTab(1).then((val) {
+    getDataFromServer(Config.FOOD_SHOW_TAB_URL, data: {'type': 1}).then((val) {
+      var items = val['item'] as List;
       List<Widget> _tmpList = [];
-      val.forEach((it) {
+
+      items.forEach((it) {
         _tmpList.add(Tab(text: it['topic_title']));
       });
+
       setState(() {
-        _tabList = val;
+        _tabList = items;
         _tabTitles = _tmpList;
       });
-      print('$_tabTitles');
+      // print('$_tabTitles');
     });
 
     // _tabController = TabController(length: 7, vsync: this);

@@ -30,7 +30,7 @@ class RecommendData extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         var data = {"id": item['id']};
-        getDetail(Config.RECIPE_DETAIL_URL,data:data).then((val) {
+        getDataFromServer(Config.RECIPE_DETAIL_URL,data:data).then((val) {
           Routes.navigateTo(context, '/recipeDetail',
               params: {'data': convert.jsonEncode(val)});
         });

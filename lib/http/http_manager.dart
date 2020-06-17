@@ -15,9 +15,8 @@ class HttpManager {
     return _instance;
   }
 
-  /**
-   * config it and create
-   */
+  /// config it and create
+
   HttpManager() {
     //BaseOptions、Options、RequestOptions都可以在这里配置参数，优先级别依次递增且根据优先级别覆盖参数
     _options = BaseOptions(
@@ -53,9 +52,8 @@ class HttpManager {
     }));
   }
 
-  /**
-   * get 请求
-   */
+  /// get 请求
+
   get(url, {data, options, cancelToken}) async {
     Response response;
     try {
@@ -75,9 +73,8 @@ class HttpManager {
     return response;
   }
 
-  /**
-   * POST请求
-   */
+  /// POST请求
+
   post(url, {data, options, cancelToken}) async {
     Response response;
     try {

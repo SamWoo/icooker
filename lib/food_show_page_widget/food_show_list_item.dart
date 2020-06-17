@@ -63,7 +63,7 @@ class FoodShowCard extends StatelessWidget {
 
   Widget _buildDesc() {
     var item = data['works'];
-    var topic_info = item['topic_info'];
+    var topicInfo = item['topic_info'];
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),
       child: Column(
@@ -71,9 +71,9 @@ class FoodShowCard extends StatelessWidget {
         children: <Widget>[
           _buildTitle(item['content']),
           SizedBox(height: 8.0),
-          topic_info == null
+          topicInfo == null
               ? Container()
-              : _buildInfo(topic_info['topic_title']),
+              : _buildInfo(topicInfo['topic_title']),
           SizedBox(height: 8.0),
           _buildAuthor(item['author'], item['time']),
         ],

@@ -57,7 +57,7 @@ class TileCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           var data = {"id": id};
-          getDetail(Config.RECIPE_DETAIL_URL, data:data).then((val) {
+          getDataFromServer(Config.RECIPE_DETAIL_URL, data: data).then((val) {
             Routes.navigateTo(context, '/recipeDetail',
                 params: {'data': convert.jsonEncode(val)});
           });
@@ -118,10 +118,10 @@ class TileCard extends StatelessWidget {
   }
 
   Widget _buildTitle(var title) {
-    title = title == null ? '' : title;
+    // title = title == null ? '' : title;
     return Container(
       child: Text(
-        title,
+        title ?? "",
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
         overflow: TextOverflow.ellipsis,
       ),
@@ -152,8 +152,8 @@ class TileCard extends StatelessWidget {
   }
 
   Widget _buildFavor(var views, var favor) {
-    views = views == null ? '0' : views;
-    favor = favor == null ? '0' : favor;
+    // views = views == null ? '0' : views;
+    // favor = favor == null ? '0' : favor;
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -167,14 +167,14 @@ class TileCard extends StatelessWidget {
           SizedBox(width: 8.0),
           Icon(Icons.favorite, size: 14, color: Colors.red),
           Text(
-            favor,
+            favor ?? '0',
             style: TextStyle(
                 color: Colors.blueGrey, fontSize: ScreenUtil().setSp(32)),
           ),
           SizedBox(width: 8.0),
           Icon(Icons.visibility, size: 14, color: Colors.green),
           Text(
-            views,
+            views ?? '0',
             style: TextStyle(
                 color: Colors.blueGrey, fontSize: ScreenUtil().setSp(32)),
           ),

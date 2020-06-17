@@ -3,11 +3,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:icooker/foodset_page_widget/ad_banner.dart';
-import 'package:icooker/foodset_page_widget/channel.dart';
-import 'package:icooker/foodset_page_widget/food_list.dart';
-import 'package:icooker/foodset_page_widget/meals.dart';
-import 'package:icooker/foodset_page_widget/recommend.dart';
+import 'package:icooker/config/Config.dart';
+import 'package:icooker/food_set_page_widget/ad_banner.dart';
+import 'package:icooker/food_set_page_widget/channel.dart';
+import 'package:icooker/food_set_page_widget/food_list.dart';
+import 'package:icooker/food_set_page_widget/meals.dart';
+import 'package:icooker/food_set_page_widget/recommend.dart';
 import 'package:icooker/services/services_method.dart';
 import 'package:icooker/widgets/loading_widget.dart';
 
@@ -54,10 +55,10 @@ class _FoodSetPageState extends State<FoodSetPage>
     _tabController = TabController(length: _tabTitles.length, vsync: this);
 
     //服务器获取数据
-    getHomeRecommend().then((val) {
+    getDataFromServer(Config.INDEX_HOME_RECOMMEND_URL).then((val) {
       //推荐数据
       setState(() {
-        _recommendData = val;
+        _recommendData = (val as List);
       });
     });
   }

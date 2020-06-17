@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:icooker/config/Config.dart';
 import 'package:icooker/services/services_method.dart';
 import 'package:icooker/widgets/footer_tip.dart';
 import 'package:icooker/widgets/loading_widget.dart';
@@ -7,7 +8,7 @@ import 'package:icooker/widgets/loading_widget.dart';
 import 'food_show_list_item.dart';
 
 class FoodShowList extends StatefulWidget {
-  var data;
+  final data;
 
   FoodShowList({this.data});
 
@@ -57,10 +58,10 @@ class _FoodShowListState extends State<FoodShowList>
     });
 
     //获取初始数据
-    getFoodShowData(data).then((val) {
+    getDataFromServer(Config.FOOD_SHOW_DATA_URL, data: data).then((val) {
       // debugPrint('------>>$val');
       setState(() {
-        _list = val;
+        _list = val['items'] as List;
       });
       // debugPrint('>>>>>> $_list');
     });
@@ -77,16 +78,17 @@ class _FoodShowListState extends State<FoodShowList>
     page++;
     data['page'] = page;
 
-    getFoodShowData(data).then((val) {
+    getDataFromServer(Config.FOOD_SHOW_DATA_URL, data: data).then((val) {
       setState(() {
         isLoading = false;
-        _list.addAll(val);
+        _list.addAll(val['items'] as List);
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       children: <Widget>[
         Expanded(

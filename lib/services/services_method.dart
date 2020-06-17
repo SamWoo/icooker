@@ -5,9 +5,21 @@ import 'package:icooker/config/Config.dart';
 
 import '../http/http_manager.dart';
 
-/**
- * 获取首页推荐数据
- */
+/// 根据url和data获取服务器数据
+Future getDataFromServer(var url, {var data}) async {
+  Response response;
+  response = await HttpManager.getInstance().post(url, data: data);
+  if (response.statusCode == 200) {
+    var ret = json.decode(response.data)['data'];
+    print('ret--->$ret');
+    return ret;
+  } else {
+    throw Exception('服务器接口有问题!');
+  }
+}
+
+/// 获取首页推荐数据
+
 Future getHomeRecommend() async {
   Response response;
   response =
@@ -20,9 +32,8 @@ Future getHomeRecommend() async {
   }
 }
 
-/**
- * 获取首页展示数据
- */
+/// 获取首页展示数据
+
 Future getFoodSetData(data) async {
   Response response;
   List _dataList = [];
@@ -33,7 +44,6 @@ Future getFoodSetData(data) async {
 
   response = await HttpManager.getInstance().post(url, data: data);
   if (response.statusCode == 200) {
-    // print(json.decode(response.data));
     List tempList = json.decode(response.data)['data']['items'] as List;
     // print('tempList--->$tempList');
     tempList.forEach((val) {
@@ -60,34 +70,12 @@ Future getFoodShowTab(var type) async {
   return _dataList;
 }
 
-/**
- * 获取首页展示数据
- */
-Future getFoodShowData(var data) async {
-  Response response;
-  List _dataList = [];
-  var url = Config.FOOD_SHOW_DATA_URL;
-
-  response = await HttpManager.getInstance().post(url, data: data);
-  if (response.statusCode == 200) {
-    // print(json.decode(response.data));
-    _dataList = json.decode(response.data)['data']['items'] as List;
-    // print('dataList--->$_dataList');
-    return _dataList;
-  } else {
-    throw Exception('服务器接口有问题!');
-  }
-}
-
-/**
- * 获取健康饮食数据
- */
+/// 获取健康饮食数据
 Future getHealthEatData() async {
   Response response;
   var url = Config.HEATH_EAT_URL;
   response = await HttpManager.getInstance().post(url);
   if (response.statusCode == 200) {
-    // print(json.decode(response.data));
     var ret = json.decode(response.data)['data'];
     print('ret--->$ret');
     return ret;
@@ -96,20 +84,5 @@ Future getHealthEatData() async {
   }
 }
 
-/**
- * 获取菜谱或食评详情数据
- */
-Future getDetail(var url, {var data}) async {
-  Response response;
-  // var url = Config.RECIPE_DETAIL_URL;
-  response = await HttpManager.getInstance().post(url, data: data);
-  if (response.statusCode == 200) {
-    // print(json.decode(response.data));
-    var ret = json.decode(response.data)['data'];
-    print('ret--->$ret');
-    return ret;
-  } else {
-    throw Exception('服务器接口有问题!');
-  }
-}
+
 

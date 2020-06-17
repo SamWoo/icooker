@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:icooker/food_show_page_widget/food_show_list.dart';
 import 'package:icooker/pages/food_set_page2.dart';
 import 'package:icooker/pages/food_show_page.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 
 import 'food_reviews_page.dart';
 import 'heath_eat_page.dart';
@@ -17,6 +16,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
+  //添加AutomaticKeepAliveClientMixin，
+  //并实现对应的方法bool get wantKeepAlive => true;
+  //同时build方法实现父方法 super.build(context);
+  
   //底部需要切换的页面
   final List<Widget> _pages = [
     FoodSetPage(),
@@ -66,6 +69,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     // 方式一：默认设置宽度1080px，高度1920px
     ScreenUtil.init(context);
     // 方式二：设置宽度750px，高度1334px

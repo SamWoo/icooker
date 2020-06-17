@@ -53,7 +53,7 @@ class _FoodShowPageState extends State<FoodShowPage>
       child: AppBar(
         automaticallyImplyLeading: false,
         brightness: Brightness.light,
-        flexibleSpace: Image.asset('assets/images/bar.jpg', fit: BoxFit.cover),
+        flexibleSpace: Image.asset('assets/images/bar.png', fit: BoxFit.cover),
         title: TabBar(
           tabs: _tabTitles,
           controller: _tabController,

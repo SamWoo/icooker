@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icooker/health_eat_page_widget/classify.dart';
 import 'package:icooker/mock/health_eat_data.dart';
-import 'package:icooker/services/services_method.dart';
 import 'package:icooker/widgets/loading_widget.dart';
+import 'package:icooker/config/Config.dart';
 
 class HeathEatPage extends StatefulWidget {
   HeathEatPage({Key key}) : super(key: key);
@@ -24,7 +24,7 @@ class _HeathEatPageState extends State<HeathEatPage> {
           _dataList = _ret['items'] as List;
         }));
 
-    // getHealthEatData().then((val) {
+    // getDataFromServer(Config.HEATH_EAT_URL).then((val) {
     //   setState(() {
     //     _ret = val;
     //     _dataList = val['items'] as List;

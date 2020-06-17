@@ -80,7 +80,7 @@ class _MealsState extends State<Meals> with SingleTickerProviderStateMixin {
         }).toList(),
         isScrollable: true,
         controller: mTabController,
-        labelColor: Color(0xffff0000),
+        labelColor: Colors.black,
         labelStyle: TextStyle(
           fontSize: ScreenUtil().setSp(56),
           fontWeight: FontWeight.bold,
@@ -124,7 +124,7 @@ class _MealsState extends State<Meals> with SingleTickerProviderStateMixin {
           return GestureDetector(
             onTap: () {
               var data = {"id": it['id']};
-              getDetail(Config.RECIPE_DETAIL_URL,data:data).then((val) {
+              getDataFromServer(Config.RECIPE_DETAIL_URL, data: data).then((val) {
                 Routes.navigateTo(context, '/recipeDetail',
                     params: {'data': convert.jsonEncode(val)});
               });

@@ -6,7 +6,7 @@ import 'package:icooker/widgets/loading_widget.dart';
 import 'food_list_item.dart';
 
 class FoodList extends StatefulWidget {
-  var data;
+  final data;
   FoodList({this.data});
 
   @override
@@ -84,6 +84,7 @@ class _FoodListState extends State<FoodList>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       children: <Widget>[
         Expanded(
