@@ -8,6 +8,7 @@ class Routes {
   static String root = '/';
   static String setting = '/setting';
   static String recipeDetail = '/recipeDetail';
+  static String imagePreview = '/imagePreview';
 
   static void configureRouters(Router router) {
     router.notFoundHandler = Handler(
@@ -16,8 +17,9 @@ class Routes {
       return;
     });
 
-    router.define(setting, handler: settingHandler);
-    router.define(recipeDetail, handler: recipeDetailHandler);
+    router.define(setting, handler: settingHandler); //设置界面
+    router.define(recipeDetail, handler: recipeDetailHandler); //菜谱详情界面
+    router.define(imagePreview, handler: imagePreviewHandler); //图片预览界面
   }
 
   // 对参数进行encode，解决参数中有特殊字符，影响fluro路由匹配

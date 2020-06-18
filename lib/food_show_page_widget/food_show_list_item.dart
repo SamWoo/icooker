@@ -36,6 +36,7 @@ class FoodShowCard extends StatelessWidget {
     //每个card的默认宽度
     var _itemWidth = MediaQuery.of(context).size.width - 16 / 2;
     return Container(
+      width: _itemWidth,
       child: ClipRRect(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(4.0),
@@ -44,18 +45,10 @@ class FoodShowCard extends StatelessWidget {
         child: CachedNetworkImage(
           imageUrl: data['works']['img'],
           fit: BoxFit.cover,
-          placeholder: (context, url) => Container(
-            width: _itemWidth,
-            child: AspectRatio(
-                aspectRatio: ratio,
-                child: Image.asset('assets/images/placeholder.png',
-                    fit: BoxFit.fill)),
-          ),
-          errorWidget: (context, url, error) => AspectRatio(
-            aspectRatio: ratio,
-            child:
-                Image.asset('assets/images/placeholder.png', fit: BoxFit.fill),
-          ),
+          placeholder: (context, url) =>
+              Image.asset('assets/images/placeholder.png', fit: BoxFit.cover),
+          errorWidget: (context, url, error) =>
+              Image.asset('assets/images/placeholder.png', fit: BoxFit.fill),
         ),
       ),
     );

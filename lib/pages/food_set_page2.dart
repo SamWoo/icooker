@@ -92,8 +92,10 @@ class _FoodSetPageState extends State<FoodSetPage>
     return PreferredSize(
       child: AppBar(
         // elevation: 0,
+        brightness: Brightness.light,
+        flexibleSpace: Image.asset('assets/images/bar.png', fit: BoxFit.cover),
         leading: IconButton(
-          icon: Icon(Icons.add, color: Colors.white),
+          icon: Icon(Icons.add, color: Colors.black87),
           onPressed: () => debugPrint("点击+按钮.."),
         ),
         centerTitle: true,
@@ -102,7 +104,8 @@ class _FoodSetPageState extends State<FoodSetPage>
           padding: EdgeInsets.all(6.0),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
-              color: Colors.grey[200]),
+              border: Border.all(width:0.5,color:Colors.grey),
+              color: Colors.grey[100]),
           child: InkWell(
             onTap: () {
               Fluttertoast.showToast(msg: '点击搜索按钮');
@@ -111,7 +114,7 @@ class _FoodSetPageState extends State<FoodSetPage>
               children: <Widget>[
                 Icon(
                   Icons.search,
-                  color: Colors.blueGrey,
+                  color: Colors.grey[700],
                 ),
                 SizedBox(width: 8.0),
                 Text(
@@ -127,7 +130,7 @@ class _FoodSetPageState extends State<FoodSetPage>
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.email, color: Colors.white),
+            icon: Icon(Icons.email, color: Colors.grey[700]),
             onPressed: () => Fluttertoast.showToast(msg: '点击Email按钮'),
           ),
         ],

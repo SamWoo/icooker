@@ -1,12 +1,14 @@
+import 'dart:convert' as convert;
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
-import 'image_preview.dart';
+import 'package:icooker/router/routes.dart';
 
 class NinthPalace extends StatelessWidget {
   final data;
   final spacing;
   final runSpacing;
+
   const NinthPalace({this.data, this.spacing = 4.0, this.runSpacing = 4.0});
 
   @override
@@ -14,7 +16,6 @@ class NinthPalace extends StatelessWidget {
     List<String> imgList = [];
     final screenWidth = MediaQuery.of(context).size.width - 24.0;
     var itemWidth;
-    var index = 0;
 
     data.forEach((it) {
       imgList.add(it['img']);
@@ -43,37 +44,68 @@ class NinthPalace extends StatelessWidget {
       child: Wrap(
         spacing: spacing,
         runSpacing: runSpacing,
-        children: data.map<Widget>((it) {
-          index++;
-          return InkWell(
-            onTap: () {
-              Future.delayed(Duration(milliseconds: 100)).then((e) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        ImagePreview(initIndex: index, imagesList: imgList),
+        children: data
+            .asMap()
+            .map<int, Widget>((index, it) {//必须进行类型限定，否则报错
+              return MapEntry<int, Widget>(
+                index,
+                InkWell(
+                  onTap: () {
+                    var data = {'initIndex': index, 'imagesList': imgList};
+                    Future.delayed(Duration(milliseconds: 100)).then((e) {
+                      Routes.navigateTo(context, '/imagePreview',
+                          params: {'data': convert.jsonEncode(data)});
+                    });
+                  },
+                  child: Container(
+                    width: itemWidth,
+                    height: itemWidth,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 0.5, color: Color(0xfff2e6e6)),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: it['img'],
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Container(
+                        child: Image.asset('assets/images/placeholder.png',
+                            fit: BoxFit.cover),
+                      ),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
                   ),
-                );
-              });
-            },
-            child: Container(
-              width: itemWidth,
-              height: itemWidth,
-              decoration: BoxDecoration(
-                border: Border.all(width: 0.5, color: Color(0xfff2e6e6)),
-              ),
-              child: CachedNetworkImage(
-                imageUrl: it['img'],
-                fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
-                  child: Image.asset('assets/images/placeholder.png',
-                      fit: BoxFit.cover),
                 ),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-              ),
-            ),
-          );
-        }).toList(),
+              );
+            })
+            .values
+            .toList(),
+
+        // data.map<Widget>((it) {
+        //   return InkWell(
+        //     onTap: () {
+        //       var data = {'initIndex': 0, 'imagesList': imgList};
+        //       Future.delayed(Duration(milliseconds: 50)).then((e) {
+        //         Routes.navigateTo(context, '/imagePreview',
+        //             params: {'data': convert.jsonEncode(data)});
+        //       });
+        //     },
+        //     child: Container(
+        //       width: itemWidth,
+        //       height: itemWidth,
+        //       decoration: BoxDecoration(
+        //         border: Border.all(width: 0.5, color: Color(0xfff2e6e6)),
+        //       ),
+        //       child: CachedNetworkImage(
+        //         imageUrl: it['img'],
+        //         fit: BoxFit.cover,
+        //         placeholder: (context, url) => Container(
+        //           child: Image.asset('assets/images/placeholder.png',
+        //               fit: BoxFit.cover),
+        //         ),
+        //         errorWidget: (context, url, error) => Icon(Icons.error),
+        //       ),
+        //     ),
+        //   );
+        // }).toList(),
       ),
     );
   }
