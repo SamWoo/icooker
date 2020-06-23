@@ -43,6 +43,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+//      backgroundColor: Colors.grey[200],
       body: _ret == null
           ? LoadingWidget()
           : Stack(
@@ -263,7 +264,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
     List cookSteps = _ret['cook_steps'] as List;
 
     return Container(
-      // margin: EdgeInsets.only(top: 8.0),
+      margin: EdgeInsets.symmetric(horizontal:4.0,vertical:8.0),
       child: Column(
         children: cookSteps.map<Widget>((it) {
           return Container(
@@ -287,7 +288,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
       children: <Widget>[
         CachedNetworkImage(
           width: _width,
-          height: _width * 0.8,
+          height: _width * 0.9,
           imageUrl: it['pic_urls'][0]['big'],
           fit: BoxFit.fill,
         ),

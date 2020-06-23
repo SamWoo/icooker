@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icooker/config/Config.dart';
 import 'package:icooker/provider/app_info_provider.dart';
 import 'package:icooker/router/routes.dart';
+import 'package:icooker/utils/Utils.dart';
 import 'package:icooker/utils/spHelper.dart';
 import 'package:provider/provider.dart';
 
@@ -14,13 +18,20 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   String _colorKey;
+  var cacheSize;
+
   @override
   void initState() {
     super.initState();
     _initAsync();
+    Utils.getInstance().loadCache().then((val) {
+      setState(() {
+        cacheSize = val;
+      });
+    });
   }
 
-  void _initAsync(){
+  void _initAsync() {
     setState(() {
       _colorKey =
           SpHelper.getString(Config.key_theme_color, defValue: 'redAccent');
@@ -48,36 +59,7 @@ class _SettingPageState extends State<SettingPage> {
             title: Text('主题'),
             initiallyExpanded: true,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                child: Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: Config.themeColorMap.keys.map((key) {
-                    Color value = Config.themeColorMap[key];
-                    return InkWell(
-                      onTap: () async{
-                        setState(() {
-                          _colorKey = key;
-                        });
-                        await SpHelper.putString(Config.key_theme_color, key);
-                        Provider.of<AppInfoProvider>(context,listen: false).setThemeColor(key);
-                      },
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        color: value,
-                        child: _colorKey == key
-                            ? Icon(
-                                Icons.done,
-                                color: Colors.white,
-                              )
-                            : null,
-                      ),
-                    );
-                  }).toList(),
-                ),
-              )
+              _buildColorItem(context),
             ],
           ),
           ListTile(
@@ -94,9 +76,111 @@ class _SettingPageState extends State<SettingPage> {
                 Icon(Icons.keyboard_arrow_right)
               ],
             ),
-          )
+          ),
+          ListTile(
+            leading: Icon(FontAwesome.folder_open_o),
+            title: Text('清除缓存'),
+            trailing: Text(
+              cacheSize ?? '0.0',
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(36),
+                color: Colors.grey[700],
+              ),
+            ),
+            onTap: () => showDialog(
+                context: context,
+                builder: (context) => _buildCupertinoAlertDialog(context)),
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildColorItem(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        children: Config.themeColorMap.keys.map((key) {
+          Color value = Config.themeColorMap[key];
+          return InkWell(
+            onTap: () async {
+              setState(() {
+                _colorKey = key;
+              });
+              await SpHelper.putString(Config.key_theme_color, key);
+              Provider.of<AppInfoProvider>(context, listen: false)
+                  .setThemeColor(key);
+            },
+            child: Container(
+              width: 40,
+              height: 40,
+              color: value,
+              child: _colorKey == key
+                  ? Icon(
+                      Icons.done,
+                      color: Colors.white,
+                    )
+                  : null,
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildCupertinoAlertDialog(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: CupertinoAlertDialog(
+        title: _buildTitle(context),
+        content: _buildContent(context),
+        actions: <Widget>[
+          CupertinoButton(
+              child: Text('Yes!'),
+              onPressed: () {
+                Utils.getInstance().clearCache();
+                Navigator.pop(context);
+                Utils.getInstance().loadCache().then((val) {
+                  setState(() {
+                    cacheSize = val;
+                  });
+                });
+              }),
+          CupertinoButton(
+              child: Text('No!'), onPressed: () => Navigator.pop(context)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Icon(
+          CupertinoIcons.delete_solid,
+          color: Colors.red,
+        ),
+        Expanded(
+          child: Text(
+            '清理缓存',
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: ScreenUtil().setSp(48),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: 12.0),
+      child: Column(children: <Widget>[
+        Text('是否确定要清除缓存文件吗?'),
+      ]),
     );
   }
 }

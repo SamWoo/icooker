@@ -41,6 +41,10 @@ class Config {
   //生活技巧详情
   static const KNOWLEDGE_DETAIL_URL =
       '/Knowledge/detail?source=android&format=json&fc=msjandroid&lat=22.231348&lon=113.27846&cityCode=140&token=';
+  //channel渠道位的url
+  static const DAILYWELFARE_URL='https://apph5.meishi.cc/tbk/dailywelfare.php';//每日福利
+  static const WEEK_RANK_URL='https://apph5.meishi.cc/top/week.php';//本周流行菜谱
+
 
   //连接服务器超时时间
   static const CONNECT_TIMEOUT = 10 * 1000;

@@ -64,13 +64,13 @@ class _HeathEatPageState extends State<HeathEatPage> {
   Widget _buildSliverAppBar() {
     return SliverAppBar(
       brightness: Brightness.light,
-      expandedHeight: 120,
+      expandedHeight: ScreenUtil().setHeight(360),
       elevation: 0,
       title: _buildSearchBar(),
       pinned: true,
       backgroundColor: Colors.white,
       flexibleSpace: FlexibleSpaceBar(
-        collapseMode: CollapseMode.parallax, //è§†å·®æ•ˆæžœ
+        collapseMode: CollapseMode.parallax, //时差模式
         background: _buildFlexibleSpace(),
       ),
     );
@@ -86,11 +86,11 @@ class _HeathEatPageState extends State<HeathEatPage> {
       ),
       child: Row(
         children: <Widget>[
-          Icon(Icons.search, color: Colors.black54),
+          Icon(Icons.search, color: Colors.grey[700]),
           SizedBox(width: 8.0),
           Text(_ret['search_default'],
               style: TextStyle(
-                  color: Colors.black54, fontSize: ScreenUtil().setSp(42)))
+                  color: Colors.grey[700], fontSize: ScreenUtil().setSp(36)))
         ],
       ),
     );
@@ -104,6 +104,7 @@ class _HeathEatPageState extends State<HeathEatPage> {
             'assets/images/scene.png',
             fit: BoxFit.fill,
             height: double.infinity,
+            width: double.infinity,
           ),
           Positioned(
             bottom: 24.0,

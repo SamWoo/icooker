@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:icooker/config/Config.dart';
 import 'package:icooker/food_reviews_page_widget/ninth_palace.dart';
+import 'package:icooker/router/routes.dart';
 import 'package:icooker/services/services_method.dart';
 import 'package:icooker/widgets/loading_widget.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'dart:convert' as convert;
 
 class FoodReviewsList extends StatefulWidget {
   final data;
@@ -324,7 +326,15 @@ class _FoodReviewsListState extends State<FoodReviewsList>
             ),
             labelPadding: EdgeInsets.symmetric(horizontal: 2.0),
             backgroundColor: Color(0xfff76262),
-            onPressed: () {},
+            onPressed: () {
+              var data = {
+                'initUrl': item[0]['url'],
+                'title': '粉丝福利购',
+                'showBar': true
+              };
+              Routes.navigateTo(context, '/webViewPage',
+                  params: {'data': convert.jsonEncode(data)});
+            },
           ),
         ],
       ),

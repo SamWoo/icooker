@@ -46,13 +46,55 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+    //release 相关配置
+    signingConfigs {
+        releaseConfig {
+            storeFile file("../icooker.jks")
+            storePassword project.hasProperty("KEYSTORE_PASSWORD") ? KEYSTORE_PASSWORD : System.getenv("KEYSTORE_PASSWORD")
+            keyAlias project.hasProperty("ALIAS_NAME") ? ALIAS_NAME : System.getenv("ALIAS_NAME")
+            keyPassword project.hasProperty("ALIAS_PASSWORD") ? ALIAS_PASSWORD : System.getenv("ALIAS_PASSWORD")
         }
     }
+
+    buildTypes {
+//        release {
+//            // TODO: Add your own signing config for the release build.
+//            // Signing with the debug keys for now, so `flutter run --release` works.
+//            signingConfig signingConfigs.releaseConfig
+
+            //编译出的apk重命名
+            //这也是groovy的代码，这里的代码作用是重命名最后打包出来的apk
+            //根据 def fileName 设置的格式来命名，${}表示的是某个变量的引用
+//            android.applicationVariants.all { variant ->
+//                variant.outputs.all { output ->
+//                    def outputFile = output.outputFile
+//                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//                        def fileName = "iCooker_v${defaultConfig.versionName}_${releaseTime()}.apk"
+//                        //低版本gradle
+//                    //    output.outputFile = new File(outputFile.parent,fileName)
+//                        //高版本gradle
+//                        outputFileName = fileName
+//                    }
+//                }
+//            }
+
+//            ndk {
+//                //设置支持的SO库架构
+//                abiFilters 'arm64-v8a'
+//            }
+//        }
+        release {
+            signingConfig signingConfigs.debug
+            ndk {
+                //设置支持的SO库架构
+                abiFilters 'arm64-v8a', 'x86', 'x86_64'
+            }
+        }
+    }
+}
+
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
 
 flutter {

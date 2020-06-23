@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:icooker/config/Config.dart';
@@ -9,6 +10,7 @@ import 'package:icooker/food_set_page_widget/channel.dart';
 import 'package:icooker/food_set_page_widget/food_list.dart';
 import 'package:icooker/food_set_page_widget/meals.dart';
 import 'package:icooker/food_set_page_widget/recommend.dart';
+import 'package:icooker/pages/search_page.dart';
 import 'package:icooker/services/services_method.dart';
 import 'package:icooker/widgets/loading_widget.dart';
 
@@ -93,6 +95,7 @@ class _FoodSetPageState extends State<FoodSetPage>
       child: AppBar(
         // elevation: 0,
         brightness: Brightness.light,
+        backgroundColor: Colors.transparent,
         flexibleSpace: Image.asset('assets/images/bar.png', fit: BoxFit.cover),
         leading: IconButton(
           icon: Icon(Icons.add, color: Colors.black87),
@@ -104,17 +107,19 @@ class _FoodSetPageState extends State<FoodSetPage>
           padding: EdgeInsets.all(6.0),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
-              border: Border.all(width:0.5,color:Colors.grey),
+              border: Border.all(width: 0.5, color: Colors.grey),
               color: Colors.grey[100]),
           child: InkWell(
             onTap: () {
               Fluttertoast.showToast(msg: '点击搜索按钮');
+              showSearch(context: context, delegate: SearchPage());
             },
             child: Row(
               children: <Widget>[
                 Icon(
-                  Icons.search,
+                  EvilIcons.search,
                   color: Colors.grey[700],
+                  size: 20,
                 ),
                 SizedBox(width: 8.0),
                 Text(
@@ -130,7 +135,7 @@ class _FoodSetPageState extends State<FoodSetPage>
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.email, color: Colors.grey[700]),
+            icon: Icon(Icons.mail_outline, color: Colors.black87),
             onPressed: () => Fluttertoast.showToast(msg: '点击Email按钮'),
           ),
         ],
@@ -146,7 +151,7 @@ class _FoodSetPageState extends State<FoodSetPage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-//              _slogan(),
+            //  _slogan(),
             RecommendData(data: _recommendData[1]['video_info']),
             Channel(data: _recommendData[2]['channel']),
             Meals(_recommendData[3]['sancan']),
@@ -171,7 +176,7 @@ class _FoodSetPageState extends State<FoodSetPage>
               controller: _tabController,
               tabs: _tabTitles,
               labelColor: Colors.red,
-              labelPadding: EdgeInsets.symmetric(horizontal: 2.0),
+              labelPadding: EdgeInsets.all(2.0),
               labelStyle: TextStyle(
                 fontSize: ScreenUtil().setSp(42),
                 // color: Colors.black,

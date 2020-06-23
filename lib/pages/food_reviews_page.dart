@@ -156,8 +156,9 @@ class _FoodReviewsPageState extends State<FoodReviewsPage>
 
   Widget _buildTabBar() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
-      height: 48,
+      // color: Colors.blue,
+      padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),
+      height: ScreenUtil().setHeight(140),
       child: TabBar(
         tabs: _tabTitles.map<Widget>((it) {
           return Tab(text: it);
@@ -166,12 +167,12 @@ class _FoodReviewsPageState extends State<FoodReviewsPage>
         controller: mTabController,
         labelColor: Colors.black,
         labelStyle: TextStyle(
-          fontSize: ScreenUtil().setSp(64),
+          fontSize: ScreenUtil().setSp(56),
           fontWeight: FontWeight.bold,
         ),
         unselectedLabelColor: Colors.grey[600],
         unselectedLabelStyle: TextStyle(
-          fontSize: ScreenUtil().setSp(48),
+          fontSize: ScreenUtil().setSp(42),
         ),
         indicatorSize: TabBarIndicatorSize.label,
         indicatorColor: Colors.red,

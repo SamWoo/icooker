@@ -70,17 +70,26 @@ class _MealsState extends State<Meals> with SingleTickerProviderStateMixin {
   Widget _buildPageTitles() {
     //PageView标题
     return Container(
-      alignment: Alignment.center,
-      height: 36,
+      // color:Colors.yellow,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/bar03.png'),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(Colors.white60, BlendMode.modulate),
+        ),
+      ),
+//       alignment: Alignment.center,
+      height: ScreenUtil().setHeight(128),
       width: double.infinity,
       padding: EdgeInsets.symmetric(vertical: 4.0),
       child: TabBar(
         tabs: _data.map<Widget>((it) {
           return Tab(text: it['title']);
         }).toList(),
-        isScrollable: true,
+        isScrollable: false,
         controller: mTabController,
         labelColor: Colors.black,
+        labelPadding: EdgeInsets.all(4),
         labelStyle: TextStyle(
           fontSize: ScreenUtil().setSp(56),
           fontWeight: FontWeight.bold,
@@ -114,7 +123,7 @@ class _MealsState extends State<Meals> with SingleTickerProviderStateMixin {
   Widget _buildItem(BuildContext context, int index) {
     var items = _data[index]['items'];
     var itemWidth = (MediaQuery.of(context).size.width - 24) / 2;
-    var itemHeight = itemWidth * 1.3;
+    var itemHeight = ScreenUtil().setHeight(600);
     return Container(
       // color: Colors.yellow,
       padding: EdgeInsets.symmetric(horizontal: 4.0),
@@ -124,7 +133,8 @@ class _MealsState extends State<Meals> with SingleTickerProviderStateMixin {
           return GestureDetector(
             onTap: () {
               var data = {"id": it['id']};
-              getDataFromServer(Config.RECIPE_DETAIL_URL, data: data).then((val) {
+              getDataFromServer(Config.RECIPE_DETAIL_URL, data: data)
+                  .then((val) {
                 Routes.navigateTo(context, '/recipeDetail',
                     params: {'data': convert.jsonEncode(val)});
               });
@@ -150,7 +160,7 @@ class _MealsState extends State<Meals> with SingleTickerProviderStateMixin {
                     ),
                   ),
                   Container(
-                    width: ScreenUtil().setWidth(480),
+                    width: itemWidth,
                     padding: EdgeInsets.symmetric(vertical: 4.0),
                     child: Text(
                       it['title'],
@@ -170,7 +180,7 @@ class _MealsState extends State<Meals> with SingleTickerProviderStateMixin {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: Color(0xfff77e7e),
-                        fontSize: ScreenUtil().setSp(30),
+                        fontSize: ScreenUtil().setSp(32),
                       ),
                     ),
                   ),

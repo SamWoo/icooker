@@ -30,7 +30,7 @@ class RecommendData extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         var data = {"id": item['id']};
-        getDataFromServer(Config.RECIPE_DETAIL_URL,data:data).then((val) {
+        getDataFromServer(Config.RECIPE_DETAIL_URL, data: data).then((val) {
           Routes.navigateTo(context, '/recipeDetail',
               params: {'data': convert.jsonEncode(val)});
         });
@@ -75,13 +75,9 @@ class RecommendData extends StatelessWidget {
           fit: BoxFit.cover,
           placeholder: (context, url) =>
               Image.asset('assets/images/placeholder.png', fit: BoxFit.fill),
-          errorWidget: (context, url, error) => Container(
-            child: Center(
-              child: Icon(
-                Icons.error,
-                color: Colors.white,
-              ),
-            ),
+          errorWidget: (context, url, error) => Icon(
+            Icons.error,
+            color: Colors.white,
           ),
         ),
       ),

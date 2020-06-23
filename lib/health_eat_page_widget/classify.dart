@@ -11,7 +11,7 @@ class Classfiy extends StatelessWidget {
   Widget build(BuildContext context) {
     // debugPrint('****${data['items']}');
     return Container(
-      margin: EdgeInsets.symmetric(vertical:2.0),
+      margin: EdgeInsets.symmetric(vertical: 2.0),
       padding: EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,15 +33,16 @@ class Classfiy extends StatelessWidget {
           SizedBox(height: 4.0),
           Text(data['desc'],
               style: TextStyle(
-                  fontSize: ScreenUtil().setSp(32), color: Colors.blueGrey[700])),
+                  fontSize: ScreenUtil().setSp(32),
+                  color: Colors.blueGrey[700])),
           SizedBox(height: 8.0),
           Container(
-            height: 180,
-            color: Colors.white,
+            height: ScreenUtil().setHeight(520),
+            // color: Colors.blue,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) =>
-                  ClassfiyCard(data:data['items'][index]),
+                  ClassfiyCard(data: data['items'][index]),
               itemCount: data['items'].length,
             ),
           )
