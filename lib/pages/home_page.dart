@@ -8,18 +8,19 @@ import 'food_reviews_page.dart';
 import 'heath_eat_page.dart';
 import 'my_page.dart';
 
-class Home extends StatefulWidget {
-  Home({Key key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   //添加AutomaticKeepAliveClientMixin，
   //并实现对应的方法bool get wantKeepAlive => true;
   //同时build方法实现父方法 super.build(context);
-  
+
   //底部需要切换的页面
   final List<Widget> _pages = [
     FoodSetPage(),

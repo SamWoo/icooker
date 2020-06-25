@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icooker/health_eat_page_widget/classify.dart';
-import 'package:icooker/mock/health_eat_data.dart';
+import 'package:icooker/mock/mock_data.dart';
 import 'package:icooker/widgets/loading_widget.dart';
 import 'package:icooker/config/Config.dart';
 

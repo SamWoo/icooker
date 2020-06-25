@@ -71,5 +71,6 @@ class Config {
     'black': Colors.black,
   };
   // Theme Color Key
-  static const key_theme_color = 'key_theme_color';
+  static const KEY_THEME_COLOR = 'key_theme_color';
+  static const KEY_FIRST_LOGIN='key_first_login';
 }

@@ -30,7 +30,7 @@ class MyPage extends StatelessWidget {
                 clipper: BottomClipper(),
                 child: Container(
                   color: Theme.of(context).primaryColor,
-                  height: 150,
+                  height: 120,
                 ),
               ),
               Positioned(

@@ -170,4 +170,11 @@ class MOCKDATA {
       ]
     }
   };
+
+  static const List<String> GUIDE_IMAGE_LIST = [
+    'http://pic1.win4000.com/mobile/2017-12-06/5a27a1fd3a21b.jpg',
+    'http://attach.bbs.miui.com/forum/201707/12/000418judrhffzdzr5diuw.jpg',
+    'http://wx3.sinaimg.cn/large/006RqDOIly1gcfde7ix4tg305o0a0x6q.gif',
+    'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=362761776,3269780956&fm=26&gp=0.jpg'
+  ];
 }

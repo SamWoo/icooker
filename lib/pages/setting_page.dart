@@ -34,7 +34,7 @@ class _SettingPageState extends State<SettingPage> {
   void _initAsync() {
     setState(() {
       _colorKey =
-          SpHelper.getString(Config.key_theme_color, defValue: 'redAccent');
+          SpHelper.getString(Config.KEY_THEME_COLOR, defValue: 'redAccent');
       // bool _firstKey = SpHelper.getBool(Config.key_first_install, defValue: true);
     });
   }
@@ -78,7 +78,7 @@ class _SettingPageState extends State<SettingPage> {
             ),
           ),
           ListTile(
-            leading: Icon(FontAwesome.folder_open_o),
+            leading: Icon(Icons.polymer),
             title: Text('清除缓存'),
             trailing: Text(
               cacheSize ?? '0.0',
@@ -109,7 +109,7 @@ class _SettingPageState extends State<SettingPage> {
               setState(() {
                 _colorKey = key;
               });
-              await SpHelper.putString(Config.key_theme_color, key);
+              await SpHelper.putString(Config.KEY_THEME_COLOR, key);
               Provider.of<AppInfoProvider>(context, listen: false)
                   .setThemeColor(key);
             },
@@ -161,6 +161,7 @@ class _SettingPageState extends State<SettingPage> {
         Icon(
           CupertinoIcons.delete_solid,
           color: Colors.red,
+          size: 32.0,
         ),
         Expanded(
           child: Text(
@@ -179,7 +180,7 @@ class _SettingPageState extends State<SettingPage> {
     return Padding(
       padding: EdgeInsets.only(top: 12.0),
       child: Column(children: <Widget>[
-        Text('是否确定要清除缓存文件吗?'),
+        Text('是否确定要清除缓存文件?'),
       ]),
     );
   }

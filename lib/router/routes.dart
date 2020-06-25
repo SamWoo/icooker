@@ -2,10 +2,12 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:icooker/router/router_handler.dart';
 
+// 在routes.dart文件中配置路由，这里需要注意的事首页一定要用“/”配置，其它页无所谓
 class Routes {
   static Router router;
 
   static String root = '/';
+  static String home='/home';
   static String setting = '/setting';
   static String recipeDetail = '/recipeDetail';
   static String imagePreview = '/imagePreview';
@@ -18,6 +20,7 @@ class Routes {
       return;
     });
 
+    router.define(home, handler: homeHandler); //首页界面
     router.define(setting, handler: settingHandler); //设置界面
     router.define(recipeDetail, handler: recipeDetailHandler); //菜谱详情界面
     router.define(imagePreview, handler: imagePreviewHandler); //图片预览界面

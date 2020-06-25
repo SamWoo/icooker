@@ -2,9 +2,15 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:icooker/food_reviews_page_widget/image_preview.dart';
+import 'package:icooker/pages/home_page.dart';
 import 'package:icooker/pages/recipe_detail_page.dart';
 import 'package:icooker/pages/setting_page.dart';
 import 'package:icooker/pages/webview_page.dart';
+
+Handler homeHandler =
+    Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+  return HomePage();
+});
 
 Handler settingHandler =
     Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {

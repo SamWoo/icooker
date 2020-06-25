@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:icooker/pages/guide_page.dart';
 import 'package:icooker/router/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -50,6 +51,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _colorKey;
+  bool _firstKey;
 
   @override
   void initState() {
@@ -64,8 +66,9 @@ class _MyAppState extends State<MyApp> {
     Routes.router = router;
     // 主题颜色值
     Color _themeColor;
-
-    _colorKey = SpHelper.getString(Config.key_theme_color, defValue: 'red');
+    _colorKey = SpHelper.getString(Config.KEY_THEME_COLOR, defValue: 'red');
+    //是否第一次登录，是：显示引导页guide_page；否：显示home_page
+    _firstKey = SpHelper.getBool(Config.KEY_FIRST_LOGIN, defValue: true);
 
     return MultiProvider(
       providers: [
@@ -86,7 +89,7 @@ class _MyAppState extends State<MyApp> {
               primaryColor: _themeColor,
               accentColor: _themeColor,
               indicatorColor: Colors.white),
-          home: Home(),
+          home: _firstKey ? GuidePage() : HomePage(),
           // )
         );
       }),
