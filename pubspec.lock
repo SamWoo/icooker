@@ -105,7 +105,7 @@ packages:
       name: file
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "5.2.0"
+    version: "5.2.1"
   fluro:
     dependency: "direct main"
     description:

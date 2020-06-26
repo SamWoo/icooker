@@ -55,11 +55,11 @@ class _FoodListState extends State<FoodList>
 
     //获取初始数据
     getFoodSetData(data).then((val) {
-      print('------>>$val');
+//      print('------>>$val');
       setState(() {
         _list = val;
       });
-      print('>>>>>> $_list');
+//      print('>>>>>> $_list');
     });
   }
 

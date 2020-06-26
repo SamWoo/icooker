@@ -8,6 +8,7 @@ class Routes {
 
   static String root = '/';
   static String home='/home';
+  static String search='/search';
   static String setting = '/setting';
   static String recipeDetail = '/recipeDetail';
   static String imagePreview = '/imagePreview';
@@ -21,6 +22,7 @@ class Routes {
     });
 
     router.define(home, handler: homeHandler); //首页界面
+    router.define(search, handler: searchHandler); //首页界面
     router.define(setting, handler: settingHandler); //设置界面
     router.define(recipeDetail, handler: recipeDetailHandler); //菜谱详情界面
     router.define(imagePreview, handler: imagePreviewHandler); //图片预览界面

@@ -11,7 +11,7 @@ Future getDataFromServer(var url, {var data}) async {
   response = await HttpManager.getInstance().post(url, data: data);
   if (response.statusCode == 200) {
     var ret = json.decode(response.data)['data'];
-    print('ret--->$ret');
+//    print('ret--->$ret');
     return ret;
   } else {
     throw Exception('服务器接口有问题!');
@@ -41,6 +41,19 @@ Future getFoodSetData(data) async {
     });
     // print('dataList--->$_dataList');
     return _dataList;
+  } else {
+    throw Exception('服务器接口有问题!');
+  }
+}
+
+/// 获取服务器搜索热词数据
+Future getHotWords(var url, {var data}) async {
+  Response response;
+  response = await HttpManager.getInstance().post(url, data: data);
+  if (response.statusCode == 200) {
+    var ret = response.data['data'];
+//    print('ret--->$ret');
+    return ret;
   } else {
     throw Exception('服务器接口有问题!');
   }

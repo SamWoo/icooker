@@ -72,7 +72,7 @@ class RecommendData extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
         child: CachedNetworkImage(
           imageUrl: item['video']['img'],
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
           placeholder: (context, url) =>
               Image.asset('assets/images/placeholder.png', fit: BoxFit.fill),
           errorWidget: (context, url, error) => Icon(

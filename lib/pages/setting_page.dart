@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icooker/config/Config.dart';
 import 'package:icooker/provider/app_info_provider.dart';
@@ -35,7 +34,6 @@ class _SettingPageState extends State<SettingPage> {
     setState(() {
       _colorKey =
           SpHelper.getString(Config.KEY_THEME_COLOR, defValue: 'redAccent');
-      // bool _firstKey = SpHelper.getBool(Config.key_first_install, defValue: true);
     });
   }
 
@@ -78,7 +76,7 @@ class _SettingPageState extends State<SettingPage> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.polymer),
+            leading: Icon(Icons.android),
             title: Text('清除缓存'),
             trailing: Text(
               cacheSize ?? '0.0',

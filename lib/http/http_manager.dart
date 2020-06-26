@@ -2,6 +2,7 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:icooker/config/Config.dart';
+import 'dart:convert';
 
 class HttpManager {
   static HttpManager _instance;
@@ -59,15 +60,15 @@ class HttpManager {
     try {
       response = await _dio.get(url,
           queryParameters: data, options: options, cancelToken: cancelToken);
-      print('get success---------${response.statusCode}');
-      print('get success---------${response.data}');
+      print('get success------>${response.statusCode}');
+      print('get success------>${json.decode(response.data)}');
 
       //  response.data; 响应体
       //  response.headers; 响应头
       //  response.request; 请求体
       //  response.statusCode; 状态码
     } on DioError catch (e) {
-      print('get error---------$e');
+      print('get error------>$e');
       formatError(e);
     }
     return response;
@@ -80,9 +81,9 @@ class HttpManager {
     try {
       response = await _dio.post(url,
           queryParameters: data, options: options, cancelToken: cancelToken);
-      print('post success---------${response.data}');
+      print('post success------>${response.data}');
     } on DioError catch (e) {
-      print('post error---------$e');
+      print('post error------>$e');
       formatError(e);
     }
     return response;
@@ -99,9 +100,9 @@ class HttpManager {
         //进度
         print("$count $total");
       });
-      print('downloadFile success---------${response.data}');
+      print('downloadFile success------>${json.decode(response.data)}');
     } on DioError catch (e) {
-      print('downloadFile error---------$e');
+      print('downloadFile error------>$e');
       formatError(e);
     }
     return response.data;

@@ -10,9 +10,11 @@ import 'package:icooker/food_set_page_widget/channel.dart';
 import 'package:icooker/food_set_page_widget/food_list.dart';
 import 'package:icooker/food_set_page_widget/meals.dart';
 import 'package:icooker/food_set_page_widget/recommend.dart';
-import 'package:icooker/pages/search_page.dart';
+import 'package:icooker/pages/search_page2.dart';
+import 'package:icooker/router/routes.dart';
 import 'package:icooker/services/services_method.dart';
 import 'package:icooker/widgets/loading_widget.dart';
+import 'dart:convert';
 
 class FoodSetPage extends StatefulWidget {
   FoodSetPage({Key key}) : super(key: key);
@@ -111,8 +113,12 @@ class _FoodSetPageState extends State<FoodSetPage>
               color: Colors.grey[100]),
           child: InkWell(
             onTap: () {
-              Fluttertoast.showToast(msg: '点击搜索按钮');
-              showSearch(context: context, delegate: SearchPage());
+//              Fluttertoast.showToast(msg: '点击搜索按钮');
+              // showSearch(context: context, delegate: SearchPage());
+              getHotWords(Config.SEARCH_HOT_WORDS_URL).then((val) {
+                Routes.navigateTo(context, '/search',
+                    params: {'data': json.encode(val)});
+              });
             },
             child: Row(
               children: <Widget>[

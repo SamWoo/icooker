@@ -43,7 +43,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      backgroundColor: Colors.grey[200],
+     backgroundColor: Colors.white,
       body: _ret == null
           ? LoadingWidget()
           : Stack(
