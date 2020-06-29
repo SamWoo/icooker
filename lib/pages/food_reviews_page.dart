@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icooker/config/Config.dart';
@@ -91,16 +92,36 @@ class _FoodReviewsPageState extends State<FoodReviewsPage>
       width: ScreenUtil().setWidth(480),
       margin: EdgeInsets.symmetric(horizontal: 4.0),
       decoration: BoxDecoration(
-        // color: Colors.green,
         borderRadius: BorderRadius.circular(8.0),
         image: DecorationImage(
-          colorFilter: ColorFilter.mode(Colors.grey[400], BlendMode.modulate),
-          image: NetworkImage(item['topic_img']),
-          fit: BoxFit.fill,
+          image: AssetImage('assets/images/placeholder.png'),
+          fit: BoxFit.cover,
         ),
       ),
       child: Stack(
         children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: ColorFiltered(
+              colorFilter:
+                  ColorFilter.mode(Colors.grey[400], BlendMode.modulate),
+              child: CachedNetworkImage(
+                width: double.infinity,
+                height: double.infinity,
+                imageUrl: item['topic_img'],
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.0,
+                  ),
+                ),
+                errorWidget: (context, url, error) => Icon(
+                  Icons.error,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
           Container(
             padding: EdgeInsets.only(top: 8.0, left: 8.0),
             child: Column(

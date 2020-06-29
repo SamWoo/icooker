@@ -80,25 +80,24 @@ class TileCard extends StatelessWidget {
   Widget _buildImg(BuildContext context, var imgUrl, var id, var ratio) {
     var _itemWidth = (MediaQuery.of(context).size.width - 16) / 2;
     return Hero(
-        tag: id,
-        child: Container(
+      tag: id,
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(4.0),
+          topRight: Radius.circular(4.0),
+        ),
+        child: CachedNetworkImage(
           width: _itemWidth,
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(4.0),
-              topRight: Radius.circular(4.0),
-            ),
-            child: CachedNetworkImage(
-              imageUrl: imgUrl,
-              fit: BoxFit.cover,
-              placeholder: (context, url) => Container(
-                child: Image.asset('assets/images/placeholder.png',
-                    fit: BoxFit.fill),
-              ),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            ),
+          imageUrl: imgUrl,
+          fit: BoxFit.cover,
+          placeholder: (context, url) => Container(
+            child:
+                Image.asset('assets/images/placeholder.png', fit: BoxFit.cover),
           ),
-        ));
+          errorWidget: (context, url, error) => Icon(Icons.error),
+        ),
+      ),
+    );
   }
 
   Widget _buildDesc(var title, var author, var views, var favor) {
@@ -118,7 +117,6 @@ class TileCard extends StatelessWidget {
   }
 
   Widget _buildTitle(var title) {
-    // title = title == null ? '' : title;
     return Container(
       child: Text(
         title ?? "",
@@ -152,8 +150,6 @@ class TileCard extends StatelessWidget {
   }
 
   Widget _buildFavor(var views, var favor) {
-    // views = views == null ? '0' : views;
-    // favor = favor == null ? '0' : favor;
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

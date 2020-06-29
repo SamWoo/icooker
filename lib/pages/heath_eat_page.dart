@@ -63,6 +63,7 @@ class _HeathEatPageState extends State<HeathEatPage> {
 
   Widget _buildSliverAppBar() {
     return SliverAppBar(
+      automaticallyImplyLeading: false,
       brightness: Brightness.light,
       expandedHeight: ScreenUtil().setHeight(360),
       elevation: 0,

@@ -35,21 +35,19 @@ class FoodShowCard extends StatelessWidget {
     // debugPrint(ratio.runtimeType.toString());
     //每个card的默认宽度
     var _itemWidth = MediaQuery.of(context).size.width - 16 / 2;
-    return Container(
-      width: _itemWidth,
-      child: ClipRRect(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(4.0),
-          topRight: Radius.circular(4.0),
-        ),
-        child: CachedNetworkImage(
-          imageUrl: data['works']['img'],
-          fit: BoxFit.cover,
-          placeholder: (context, url) =>
-              Image.asset('assets/images/placeholder.png', fit: BoxFit.cover),
-          errorWidget: (context, url, error) =>
-              Image.asset('assets/images/placeholder.png', fit: BoxFit.fill),
-        ),
+    return ClipRRect(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(4.0),
+        topRight: Radius.circular(4.0),
+      ),
+      child: CachedNetworkImage(
+        width: _itemWidth,
+        imageUrl: data['works']['img'],
+        fit: BoxFit.cover,
+        placeholder: (context, url) =>
+            Image.asset('assets/images/placeholder.png', fit: BoxFit.cover),
+        errorWidget: (context, url, error) =>
+            Image.asset('assets/images/placeholder.png', fit: BoxFit.fill),
       ),
     );
   }

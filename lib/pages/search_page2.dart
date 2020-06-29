@@ -58,7 +58,6 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget _buildTextField(BuildContext context) {
     return Container(
-//      color: Colors.blue,
       width: MediaQuery.of(context).size.width * 0.7,
       height: ScreenUtil().setHeight(100),
       padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
@@ -76,7 +75,7 @@ class _SearchPageState extends State<SearchPage> {
           SizedBox(width: 8.0),
           Expanded(
             child: TextField(
-//        style: TextStyle(color: Colors.grey[700]),
+              textInputAction: TextInputAction.search,
               minLines: 1,
               maxLines: 1,
               cursorColor: Colors.red,

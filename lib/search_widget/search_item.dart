@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class SearchItemView extends StatefulWidget {
   final String type;
   final List data;
@@ -25,7 +27,7 @@ class _SearchItemViewState extends State<SearchItemView> {
     var itemWidth = (MediaQuery.of(context).size.width - 24) / 3;
     return widget.data != null
         ? Container(
-            padding: EdgeInsets.symmetric(vertical:8.0),
+            padding: EdgeInsets.symmetric(vertical: 8.0),
             child: Wrap(
               spacing: 4.0,
               runSpacing: 4.0,
@@ -36,20 +38,36 @@ class _SearchItemViewState extends State<SearchItemView> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4.0),
                     image: DecorationImage(
-                      // colorFilter: ColorFilter.mode(
-                      //     Colors.grey[100], BlendMode.modulate),
-                      image:  NetworkImage(it['img']),
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/images/placeholder.png'),
                     ),
                   ),
-                  child: Center(
-                    child: Text(
-                      "# ${it['title']}",
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(48),
-                        color: Colors.white,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4.0),
+                        child: CachedNetworkImage(
+                          width: itemWidth,
+                          imageUrl: it['img'],
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          errorWidget: (context, url, error) => Icon(
+                            Icons.error,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
-                    ),
+                      Text(
+                        "# ${it['title']}",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(48),
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 );
               }).toList(),

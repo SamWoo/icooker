@@ -16,6 +16,7 @@ class MyPage extends StatelessWidget {
         //     Routes.router.pop(context);
         //   },
         // ),
+        automaticallyImplyLeading: false,
         title: Text('我的'),
         centerTitle: true,
         elevation: 0,

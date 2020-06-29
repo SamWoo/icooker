@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:icooker/search_widget.dart/search_content.dart';
+import 'package:icooker/search_widget/search_content.dart';
 
 class SearchPage extends SearchDelegate<String> {
   @override

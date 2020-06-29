@@ -2,6 +2,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:icooker/food_reviews_page_widget/image_preview.dart';
+import 'package:icooker/pages/category_page.dart';
 import 'package:icooker/pages/home_page.dart';
 import 'package:icooker/pages/recipe_detail_page.dart';
 import 'package:icooker/pages/search_page2.dart';
@@ -12,6 +13,7 @@ Handler homeHandler =
     Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
   return HomePage();
 });
+
 Handler searchHandler =
     Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
   print('data====>$params');
@@ -43,4 +45,11 @@ Handler webViewPageHandler =
   print('data====>$params');
   String data = params['data']?.first;
   return WebViewPage(data: data);
+});
+
+Handler categoryPageHandler =
+    Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+  print('data====>$params');
+  String data = params['data']?.first;
+  return CategoryPage(data: data);
 });

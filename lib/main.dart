@@ -4,6 +4,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:icooker/pages/guide_page.dart';
+import 'package:icooker/pages/splash_page.dart';
 import 'package:icooker/router/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -89,7 +90,7 @@ class _MyAppState extends State<MyApp> {
               primaryColor: _themeColor,
               accentColor: _themeColor,
               indicatorColor: Colors.white),
-          home: _firstKey ? GuidePage() : HomePage(),
+          home: _firstKey ? GuidePage() : SplashPage(),
           // )
         );
       }),
