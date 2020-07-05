@@ -14,6 +14,7 @@ class Routes {
   static String imagePreview = '/imagePreview';
   static String webViewPage = '/webViewPage';
   static String categoryPage = '/categoryPage';
+  static String searchResultPage = '/searchResult';
 
   static void configureRouters(Router router) {
     router.notFoundHandler = Handler(
@@ -28,7 +29,8 @@ class Routes {
     router.define(recipeDetail, handler: recipeDetailHandler); //菜谱详情界面
     router.define(imagePreview, handler: imagePreviewHandler); //图片预览界面
     router.define(webViewPage, handler: webViewPageHandler); //webView显示界面
-    router.define(categoryPage, handler: categoryPageHandler); //webView显示界面
+    router.define(categoryPage, handler: categoryPageHandler); //菜谱分类界面
+    router.define(searchResultPage, handler: searchResultHandler); //菜谱分类界面
   }
 
   // 对参数进行encode，解决参数中有特殊字符，影响fluro路由匹配

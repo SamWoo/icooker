@@ -9,9 +9,11 @@ import '../http/http_manager.dart';
 Future getDataFromServer(var url, {var data}) async {
   Response response;
   response = await HttpManager.getInstance().post(url, data: data);
+
   if (response.statusCode == 200) {
-    var ret = json.decode(response.data)['data'];
-//    print('ret--->$ret');
+    var ret = (response.data is String)
+        ? json.decode(response.data)['data']
+        : response.data['data'];
     return ret;
   } else {
     throw Exception('服务器接口有问题!');
@@ -34,8 +36,8 @@ Future getFoodSetData(data) async {
     tempList.forEach((val) {
       if (val.containsKey('recipe') ||
           // val.containsKey('works') ||
-          val.containsKey('video_recipe') ||
-          val.containsKey('video_article')) {
+          // val.containsKey('video_article')||
+          val.containsKey('video_recipe')) {
         _dataList.add(val);
       }
     });

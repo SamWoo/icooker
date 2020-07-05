@@ -28,7 +28,7 @@ class _MealsState extends State<Meals> with SingleTickerProviderStateMixin {
     mTabController = TabController(length: _data.length, vsync: this);
     mTabController.addListener(() {
       if (mTabController.indexIsChanging) {
-        print('tab_index====>${mTabController.index}');
+        debugPrint('tab_index====>${mTabController.index}');
         onPageChange(mTabController.index, p: mPageController);
       }
     });

@@ -54,7 +54,7 @@ class _SplashPageState extends State<SplashPage> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(0, 30.0, 10.0, 0),
+          padding: EdgeInsets.fromLTRB(0, 20.0, 10.0, 0),
           child: FlatButton(
             onPressed: () => navigationToHome(),
             color: Colors.grey,

@@ -327,8 +327,8 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
       child: Text(
-        content,
-        maxLines: 4,
+        it['content']??'',
+        maxLines: 10,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
           color: Colors.black,

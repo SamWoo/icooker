@@ -6,6 +6,7 @@ import 'package:icooker/pages/category_page.dart';
 import 'package:icooker/pages/home_page.dart';
 import 'package:icooker/pages/recipe_detail_page.dart';
 import 'package:icooker/pages/search_page2.dart';
+import 'package:icooker/pages/search_result.dart';
 import 'package:icooker/pages/setting_page.dart';
 import 'package:icooker/pages/webview_page.dart';
 
@@ -16,7 +17,7 @@ Handler homeHandler =
 
 Handler searchHandler =
     Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-  print('data====>$params');
+  print('handleData====>$params');
   String data = params['data']?.first;
   return SearchPage(data: data);
 });
@@ -28,28 +29,35 @@ Handler settingHandler =
 
 Handler recipeDetailHandler =
     Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-  print('data====>$params');
+  print('handleData====>$params');
   String data = params['data']?.first;
   return RecipeDetailPage(data: data);
 });
 
 Handler imagePreviewHandler =
     Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-  print('data====>$params');
+  print('handleData====>$params');
   String data = params['data']?.first;
   return ImagePreview(data: data);
 });
 
 Handler webViewPageHandler =
     Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-  print('data====>$params');
+  print('handleData====>$params');
   String data = params['data']?.first;
   return WebViewPage(data: data);
 });
 
 Handler categoryPageHandler =
     Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-  print('data====>$params');
+  print('handleData====>$params');
   String data = params['data']?.first;
   return CategoryPage(data: data);
+});
+
+Handler searchResultHandler =
+    Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+  print('handleData====>$params');
+  String data = params['data']?.first;
+  return SearchResultPage(data: data);
 });

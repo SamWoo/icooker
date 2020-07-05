@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:convert';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:icooker/router/routes.dart';
 
 class CategoryPage extends StatefulWidget {
   final data;
@@ -140,10 +141,20 @@ class _CategoryPageState extends State<CategoryPage> {
       runSpacing: 12.0,
       children: _subCatesList.map((it) {
         return InkWell(
-          onTap: () {
-            Fluttertoast.showToast(msg: '点击子类-->${it['title']}');
-            print('点击子类菜谱-->${it['title']}');
-          },
+          onTap: () => _navigationToResult(it),
+          // {
+          //   Fluttertoast.showToast(msg: '点击子类-->${it['title']}');
+          //   print('点击子类菜谱-->${it['title']}');
+          //   var data = {
+          //     'cid': it['id'],
+          //     'keyword':it['title'],
+          //     'order':'-hot',
+          //     'page':1,
+          //     'per_page':10
+          //   };
+          //   Routes.navigateTo(context, '/searchResult',
+          //       params: {'data': json.encode(data)});
+          // },
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
@@ -174,5 +185,20 @@ class _CategoryPageState extends State<CategoryPage> {
         );
       }).toList(),
     );
+  }
+
+  //跳转搜索结果页面
+  _navigationToResult(var it) {
+    Fluttertoast.showToast(msg: '点击子类-->${it['title']}');
+    print('点击子类菜谱-->${it['title']}');
+    var data = {
+      'cid': it['id'],
+      'keyword': it['title'],
+      'order': '-hot',
+      'page': 1,
+      'per_page': 10
+    };
+    Routes.navigateTo(context, '/searchResult',
+        params: {'data': json.encode(data)});
   }
 }

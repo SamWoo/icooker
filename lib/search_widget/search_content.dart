@@ -47,7 +47,7 @@ class _SearchContentViewState extends State<SearchContentView> {
             ),
             SearchItemView(
               type: "hot_search",
-              data: hotWords,
+              hotwords: hotWords,
             ),
             ListTile(
               dense: true,

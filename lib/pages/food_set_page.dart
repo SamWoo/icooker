@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,10 +7,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:icooker/config/Config.dart';
 import 'package:icooker/food_set_page_widget/ad_banner.dart';
 import 'package:icooker/food_set_page_widget/channel.dart';
-import 'package:icooker/food_set_page_widget/food_list.dart';
+import 'package:icooker/pages/recipe_list.dart';
 import 'package:icooker/food_set_page_widget/meals.dart';
 import 'package:icooker/food_set_page_widget/recommend.dart';
 import 'package:icooker/pages/search_page.dart';
+import 'package:icooker/router/routes.dart';
 import 'package:icooker/services/services_method.dart';
 import 'package:icooker/widgets/loading_widget.dart';
 
@@ -26,20 +29,20 @@ class _FoodSetPageState extends State<FoodSetPage>
 
   var _tabTitles = [
     Tab(text: '推荐'),
-    Tab(text: '生活技巧'),
+//    Tab(text: '生活技巧'),
     Tab(text: '时令'),
     Tab(text: '食肉'),
     Tab(text: '素食'),
     Tab(text: '烘焙'),
   ];
 
-  var _foodList = [
-    FoodList(data: {'type': '', 'page': 1}),
-    FoodList(data: {'type': '211', 'page': 1}),
-    FoodList(data: {'type': '210', 'page': 1}),
-    FoodList(data: {'type': '206', 'page': 1}),
-    FoodList(data: {'type': '207', 'page': 1}),
-    FoodList(data: {'type': '208', 'page': 1}),
+  var _recipeList = [
+    RecipeList(data: {'type': '', 'page': 1}),
+//    RecipeList(data: {'type': '211', 'page': 1}),
+    RecipeList(data: {'type': '210', 'page': 1}),
+    RecipeList(data: {'type': '206', 'page': 1}),
+    RecipeList(data: {'type': '207', 'page': 1}),
+    RecipeList(data: {'type': '208', 'page': 1}),
   ];
 
   var _recommendData;
@@ -83,7 +86,7 @@ class _FoodSetPageState extends State<FoodSetPage>
               },
               body: TabBarView(
                 controller: _tabController,
-                children: _foodList,
+                children: _recipeList,
               ),
             ),
     );
@@ -110,8 +113,12 @@ class _FoodSetPageState extends State<FoodSetPage>
               color: Colors.grey[100]),
           child: InkWell(
             onTap: () {
-              Fluttertoast.showToast(msg: '点击搜索按钮');
-              showSearch(context: context, delegate: SearchPage());
+              // Fluttertoast.showToast(msg: '点击搜索按钮');
+              // showSearch(context: context, delegate: SearchPage());
+               getHotWords(Config.SEARCH_HOT_WORDS_URL).then((val) {
+                Routes.navigateTo(context, '/search',
+                    params: {'data': json.encode(val)});
+              });
             },
             child: Row(
               children: <Widget>[
@@ -145,10 +152,11 @@ class _FoodSetPageState extends State<FoodSetPage>
 
   Widget _buildSliverAppBar() {
     return SliverAppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       pinned: true,
       floating: true,
-      expandedHeight: ScreenUtil().setHeight(2000), //展开高度，必选项
+      expandedHeight: ScreenUtil().setHeight(2600), //展开高度，必选项
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.pin,
         background: Container(
@@ -157,17 +165,11 @@ class _FoodSetPageState extends State<FoodSetPage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-//              SizedBox(height: 10.0),
 //              _slogan(),
-              SizedBox(height: 10.0),
               RecommendData(data:_recommendData[1]['video_info']),
-              SizedBox(height: 10.0),
               Channel(data:_recommendData[2]['channel']),
-              SizedBox(height: 10.0),
-              // Meals(_recommendData[3]['sancan']),
-              // SizedBox(height: 10.0),
+              Meals(_recommendData[3]['sancan']),
               AdBanner(data:_recommendData[4]['zhuanti']),
-              SizedBox(height: 10.0),
             ],
           ),
         ),

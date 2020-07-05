@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:icooker/services/services_method.dart';
 import 'package:icooker/widgets/loading_widget.dart';
 
-import 'food_list_item.dart';
+import 'recipe_list_item.dart';
 
-class FoodList extends StatefulWidget {
+class RecipeList extends StatefulWidget {
   final data;
-  FoodList({this.data});
+
+  RecipeList({this.data});
 
   @override
-  _FoodListState createState() => _FoodListState();
+  _RecipeListState createState() => _RecipeListState();
 }
 
-class _FoodListState extends State<FoodList>
+class _RecipeListState extends State<RecipeList>
     with AutomaticKeepAliveClientMixin {
   var _list;
+
   // var type;
   var page;
   var data;
-  var pageCount = 2;
+  var pageCount = 5;
   bool isLoading = false;
 
   bool isBottom = false;
@@ -35,9 +38,7 @@ class _FoodListState extends State<FoodList>
     _scrollController = ScrollController();
     data = widget.data;
     page = data['page'];
-
-    print('data====$data');
-
+    
     _scrollController.addListener(() {
       var maxPosition = _scrollController.position.maxScrollExtent;
       bool val =
@@ -55,11 +56,9 @@ class _FoodListState extends State<FoodList>
 
     //获取初始数据
     getFoodSetData(data).then((val) {
-//      print('------>>$val');
       setState(() {
         _list = val;
       });
-//      print('>>>>>> $_list');
     });
   }
 
@@ -91,14 +90,12 @@ class _FoodListState extends State<FoodList>
           child: _list == null
               ? LoadingWidget()
               : StaggeredGridView.countBuilder(
-                  primary: false,
-                  physics: BouncingScrollPhysics(),
+                  // primary: true,
+                  // physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   controller: _scrollController,
                   crossAxisCount: 4,
                   itemCount: _list.length,
-                  // crossAxisSpacing: 1.0,
-                  // mainAxisSpacing: 2.0,
                   itemBuilder: (BuildContext context, int index) {
                     return TileCard(
                       data: _list[index],
@@ -107,11 +104,16 @@ class _FoodListState extends State<FoodList>
                   staggeredTileBuilder: (index) => StaggeredTile.fit(2),
                 ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Offstage(
-            offstage: !isLoading,
-            child: LoadingWidget(),
+        Offstage(
+          offstage: !isLoading,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: SpinKitFadingCircle(
+                color: Colors.red,
+                size: 24.0,
+              ),
+            ),
           ),
         )
       ],

@@ -13,30 +13,26 @@ class TileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+//    debugPrint('Data===>$data');
     var img;
     var title;
     var id;
     var author;
+    var label;
     var viewedAmount;
     var favorAmount;
     var ratio = (data['wh_ratio'] is String)
         ? double.parse(data['wh_ratio'])
         : double.parse(data['wh_ratio'].toString()); //图片的宽高比
 
-    if (data['video_article'] != null) {
-      img = data['video_article']['img'];
-      title = data['video_article']['title'];
-      id = data['video_article']['id'];
-      author = data['video_article']['author'];
-      favorAmount = data['video_article']['favor_amount'];
-      viewedAmount = data['video_article']['viewed_amount'];
-    } else if (data['video_recipe'] != null) {
+    if (data['video_recipe'] != null) {
       img = data['video_recipe']['img'];
       title = data['video_recipe']['title'];
       id = data['video_recipe']['id'];
       author = data['video_recipe']['author'];
       viewedAmount = data['video_recipe']['viewed_amount'];
       favorAmount = data['video_recipe']['favor_amount'];
+      label = data['video_recipe']['label'];
     } else if (data['recipe'] != null) {
       img = data['recipe']['img'];
       title = data['recipe']['title'];
@@ -44,16 +40,11 @@ class TileCard extends StatelessWidget {
       author = data['recipe']['author'];
       viewedAmount = data['recipe']['viewed_amount'];
       favorAmount = data['recipe']['favor_amount'];
-    } else if (data['works'] != null) {
-      img = data['works']['img'];
-      title = data['works']['title'];
-      id = data['works']['id'];
-      author = data['works']['author'];
-      viewedAmount = data['works']['viewed_amount'];
-      favorAmount = data['works']['favor_amount'];
+      label = data['recipe']['label'];
     }
 
     return Card(
+      elevation: 1.0,
       child: InkWell(
         onTap: () {
           var data = {"id": id};
@@ -70,7 +61,7 @@ class TileCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             _buildImg(context, img, id, ratio),
-            _buildDesc(title, author, viewedAmount, favorAmount),
+            _buildInfo(title, author, viewedAmount, favorAmount, label),
           ],
         ),
       ),
@@ -86,27 +77,30 @@ class TileCard extends StatelessWidget {
           topLeft: Radius.circular(4.0),
           topRight: Radius.circular(4.0),
         ),
-        child: CachedNetworkImage(
+        child: Container(
           width: _itemWidth,
-          imageUrl: imgUrl,
-          fit: BoxFit.cover,
-          placeholder: (context, url) => Container(
-            child:
+          height: _itemWidth * ratio,
+          child: CachedNetworkImage(
+            imageUrl: imgUrl,
+            fit: BoxFit.fill,
+            placeholder: (context, url) =>
                 Image.asset('assets/images/placeholder.png', fit: BoxFit.cover),
+            errorWidget: (context, url, error) => Icon(Icons.error),
           ),
-          errorWidget: (context, url, error) => Icon(Icons.error),
         ),
       ),
     );
   }
 
-  Widget _buildDesc(var title, var author, var views, var favor) {
+  Widget _buildInfo(var title, var author, var views, var favor, var label) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _buildTitle(title),
+          SizedBox(height: 8.0),
+          _buildDesc(label),
           SizedBox(height: 8.0),
           _buildAuthor(author),
           SizedBox(height: 8.0),
@@ -124,6 +118,26 @@ class TileCard extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       ),
     );
+  }
+
+  Widget _buildDesc(var label) {
+    var desc = (label is List && label.length != 0) ? label[0]['desc'] : '';
+    return desc.isNotEmpty
+        ? Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(4.0),
+            color: Color(0xfff4cbcb),
+            child: Text(
+              '# $desc',
+              overflow: TextOverflow.ellipsis,
+              maxLines: 5,
+              style: TextStyle(
+                color: Color(0xfff77e7e),
+                fontSize: ScreenUtil().setSp(32),
+              ),
+            ),
+          )
+        : Container();
   }
 
   Widget _buildAuthor(var author) {

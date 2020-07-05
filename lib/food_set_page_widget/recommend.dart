@@ -68,16 +68,19 @@ class RecommendData extends StatelessWidget {
     return Container(
       height: ScreenUtil().setHeight(880),
       width: ScreenUtil().setHeight(880) * ratio,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12.0),
-        child: CachedNetworkImage(
-          imageUrl: item['video']['img'],
-          fit: BoxFit.fill,
-          placeholder: (context, url) =>
-              Image.asset('assets/images/placeholder.png', fit: BoxFit.fill),
-          errorWidget: (context, url, error) => Icon(
-            Icons.error,
-            color: Colors.white,
+      child: ColorFiltered(
+        colorFilter: ColorFilter.mode(Colors.grey[400], BlendMode.modulate),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: CachedNetworkImage(
+            imageUrl: item['video']['img'],
+            fit: BoxFit.fill,
+            placeholder: (context, url) =>
+                Image.asset('assets/images/placeholder.png', fit: BoxFit.fill),
+            errorWidget: (context, url, error) => Icon(
+              Icons.error,
+              color: Colors.white,
+            ),
           ),
         ),
       ),
