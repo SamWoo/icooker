@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icooker/router/routes.dart';
 
 class SplashPage extends StatefulWidget {
@@ -42,7 +41,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('count===$count');
+    debugPrint('count===$count');
     return Stack(
       alignment: Alignment(1.0, -1.0),
       children: <Widget>[
@@ -54,7 +53,7 @@ class _SplashPageState extends State<SplashPage> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(0, 20.0, 10.0, 0),
+          padding: EdgeInsets.fromLTRB(0, 20.0, 4.0, 0),
           child: FlatButton(
             onPressed: () => navigationToHome(),
             color: Colors.grey,

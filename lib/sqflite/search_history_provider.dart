@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 import '../bean/history.dart';
@@ -15,7 +16,7 @@ class SearchHistoryProvider extends BaseDbProvider {
   @override
   createTableString() => '''
   create table $name (
-        $columnId integer primary key not null,
+        $columnId integer primary key autoincrement,
         $columnName text not null
         )
   ''';
@@ -24,8 +25,8 @@ class SearchHistoryProvider extends BaseDbProvider {
   tableName() => name;
 
   //根据ID查询数据
-  Future<SearchHistory> getHistory(int id) async {
-    var mapList = await selectHistory(id);
+  Future<SearchHistory> getData(int id) async {
+    var mapList = await selectData(id);
     if (mapList.length > 0) {
       return SearchHistory.fromMapObject(mapList.first);
     }
@@ -33,13 +34,13 @@ class SearchHistoryProvider extends BaseDbProvider {
   }
 
   //查询数据
-  Future selectHistory(int id) async {
+  Future selectData(int id) async {
     Database db = await getDataBase();
     return await db.rawQuery('select * from $name where $columnId =$id');
   }
 
   //获取数据库所有记录
-  Future<List<SearchHistory>> getAllHistory() async {
+  Future<List<SearchHistory>> getAllData() async {
     List<SearchHistory> historyList = List<SearchHistory>();
     var mapList = await selectMapList();
     mapList.forEach((it) {
@@ -56,10 +57,11 @@ class SearchHistoryProvider extends BaseDbProvider {
   }
 
   //增加数据
-  Future<int> insertHistory(SearchHistory history) async {
+  Future<int> saveData(SearchHistory history) async {
     Database db = await getDataBase();
     List<Map> hasList =
-        await db.rawQuery('select * from $name where $columnId =${history.id}');
+        await db.query(name, where: "$columnName=?", whereArgs: [history.name]);
+    // debugPrint('hasList===>$hasList');
     var result;
     if (hasList.length > 0) {
       result = update(history);
@@ -73,22 +75,21 @@ class SearchHistoryProvider extends BaseDbProvider {
   //更新数据
   Future<int> update(SearchHistory history) async {
     Database db = await getDataBase();
-    return await db.rawUpdate(
-        'update $name set $columnName = ? where $columnId=?',
-        [history.name, history.id]);
+    return await db.update(name, history.toMap(),
+        where: "$columnId=?", whereArgs: [history.id]);
   }
 
   //删除数据
-  Future<int> deleteHistory(int id) async {
+  Future<int> deleteData(String val) async {
     Database db = await getDataBase();
-    return await db.rawDelete('delete from $name where $columnId =$id');
+    return await db.delete(name, where: '$columnName=?', whereArgs: [val]);
   }
 
   //该方法证明效率高
-  void deleteAllHistory() async {
+  void deleteAllData() async {
     Database db = await getDataBase();
     var batch = db.batch();
-    List<SearchHistory> histories = await getAllHistory();
+    List<SearchHistory> histories = await getAllData();
     histories.forEach((it) {
       batch.rawDelete("DELETE FROM $name WHERE $columnId =${it.id}");
     });

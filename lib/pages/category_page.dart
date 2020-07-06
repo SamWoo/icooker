@@ -142,19 +142,6 @@ class _CategoryPageState extends State<CategoryPage> {
       children: _subCatesList.map((it) {
         return InkWell(
           onTap: () => _navigationToResult(it),
-          // {
-          //   Fluttertoast.showToast(msg: '点击子类-->${it['title']}');
-          //   print('点击子类菜谱-->${it['title']}');
-          //   var data = {
-          //     'cid': it['id'],
-          //     'keyword':it['title'],
-          //     'order':'-hot',
-          //     'page':1,
-          //     'per_page':10
-          //   };
-          //   Routes.navigateTo(context, '/searchResult',
-          //       params: {'data': json.encode(data)});
-          // },
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(

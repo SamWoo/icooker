@@ -1,7 +1,13 @@
 class SearchHistory {
-  SearchHistory();
   int _id;
   String _name;
+
+  SearchHistory(this._name);
+
+  SearchHistory.map(dynamic obj) {
+    this._id = obj['id'];
+    this._name = obj['name'];
+  }
 
   // ignore: unnecessary_getters_setters
   int get id => _id;
@@ -15,7 +21,9 @@ class SearchHistory {
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
-    map['id'] = _id;
+    if (_id != null) {
+      map['id'] = _id;
+    }
     map['name'] = _name;
     return map;
   }

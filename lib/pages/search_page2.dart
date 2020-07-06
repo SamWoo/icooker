@@ -25,23 +25,21 @@ class _SearchPageState extends State<SearchPage> {
   TextEditingController _controller = TextEditingController();
   SearchHistoryProvider provider = SearchHistoryProvider();
 
-  var histories;
+  List<String> histories;
   var hotWords;
-  String _searchStr;
 
   @override
   void initState() {
     super.initState();
     hotWords = json.decode(widget.data);
-    _controller.addListener(() {
-      setState(() {
-        _searchStr = _controller.text;
-      });
-    });
 
     _getHistory().then((val) {
+      List<String> tempList = [];
+      val.forEach((it) {
+        tempList.add(it.name);
+      });
       setState(() {
-        histories = val;
+        histories = tempList;
       });
     });
   }
@@ -55,7 +53,7 @@ class _SearchPageState extends State<SearchPage> {
 
   //获取搜索历史
   Future<List<SearchHistory>> _getHistory() async {
-    return provider.getAllHistory();
+    return provider.getAllData();
   }
 
   @override
@@ -92,9 +90,10 @@ class _SearchPageState extends State<SearchPage> {
       height: ScreenUtil().setHeight(100),
       padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
       decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(width: 0.5, color: Colors.grey[700]),
-          borderRadius: BorderRadius.circular(8.0)),
+        color: Colors.white,
+        border: Border.all(width: 0.5, color: Colors.grey[700]),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
       child: Row(
         children: <Widget>[
           Icon(
@@ -120,9 +119,7 @@ class _SearchPageState extends State<SearchPage> {
               ),
               onChanged: (v) {},
               onEditingComplete: () {
-                FocusScope.of(context).requestFocus(_focusNode);
-                _navigationToResult(_searchStr);
-                _saveToDB();
+                _actionDone(context);
               },
             ),
           ),
@@ -149,9 +146,7 @@ class _SearchPageState extends State<SearchPage> {
         ),
       ),
       onPressed: () {
-        FocusScope.of(context).requestFocus(_focusNode);
-        _navigationToResult(_searchStr);
-        _saveToDB();
+        _actionDone(context);
       },
     );
   }
@@ -192,10 +187,9 @@ class _SearchPageState extends State<SearchPage> {
                 // color: Colors.red,
               ),
               contentPadding: EdgeInsets.all(0.0),
-              onTap: () {
-                print('Delete all history?');
-                _deleteAllHistory();
-              },
+              onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => _buildCupertinoAlertDialog(context)),
             ),
             _buildSearchHistory(),
           ],
@@ -280,12 +274,13 @@ class _SearchPageState extends State<SearchPage> {
               spacing: 8.0,
               children: histories.map<Widget>((it) {
                 return Chip(
-                  label: Text(it.name,
-                      style: TextStyle(color: Colors.grey, fontSize: 16.0)),
+                  label: Text(it,
+                      style: TextStyle(color: Colors.white, fontSize: 16.0)),
                   onDeleted: () {
                     setState(() {
                       histories.remove(it);
                     });
+                    provider.deleteData(it);
                   },
                   backgroundColor: _getRandomColor(),
                 );
@@ -300,6 +295,48 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
           );
+  }
+
+  Widget _buildCupertinoAlertDialog(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: CupertinoAlertDialog(
+        title: Text(
+          '清空历史记录',
+          style: TextStyle(
+            color: Colors.red,
+            fontSize: ScreenUtil().setSp(48),
+          ),
+        ),
+        content: Text(
+          '是否确定要清空历史记录?',
+          style: TextStyle(
+            color: Colors.black87,
+            fontSize: ScreenUtil().setSp(42),
+          ),
+        ),
+        actions: <Widget>[
+          CupertinoButton(
+            child: Text('确定!'),
+            onPressed: () {
+              Navigator.pop(context);
+              _deleteAllHistory();
+            },
+          ),
+          CupertinoButton(
+            child: Text('我再想想!'),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  //点击搜索按钮或软键盘搜索按钮
+  _actionDone(BuildContext context) {
+    FocusScope.of(context).requestFocus(_focusNode);
+    _navigationToResult(_controller.text);
+    _saveToDB(_controller.text);
   }
 
   //跳转搜索结果页面
@@ -318,14 +355,13 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   // 保存搜索记录到数据库
-  _saveToDB() async {
-    var history = SearchHistory();
-    history.id = DateTime.now().millisecondsSinceEpoch;
-    history.name = _searchStr;
-    setState(() {
-      histories.add(history);
-    });
-    await provider.insertHistory(history);
+  _saveToDB(var searchWord) async {
+    if (!histories.contains(searchWord)) {
+      setState(() {
+        histories.add(searchWord);
+      });
+    }
+    await provider.saveData(SearchHistory(searchWord));
   }
 
   //删除数据所有记录
@@ -333,12 +369,12 @@ class _SearchPageState extends State<SearchPage> {
     setState(() {
       histories.clear();
     });
-    provider.deleteAllHistory();
+    provider.deleteAllData();
   }
 
   //获取随机背景色
   _getRandomColor() {
-    return Color.fromARGB(240, Random.secure().nextInt(255),
-        Random.secure().nextInt(255), Random.secure().nextInt(255));
+    return Color.fromARGB(255, Random.secure().nextInt(240),
+        Random.secure().nextInt(240), Random.secure().nextInt(240));
   }
 }

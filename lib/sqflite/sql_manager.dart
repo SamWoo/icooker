@@ -30,7 +30,7 @@ class SqlManager {
   //获取当前数据库对象
   static Future<Database> getCurrentDatabase() async {
     if (_database == null) {
-      debugPrint('db is null');
+      // debugPrint('db is null');
       await init();
     }
     return _database;
