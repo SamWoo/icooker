@@ -44,7 +44,7 @@ class SearchHistoryProvider extends BaseDbProvider {
     List<SearchHistory> historyList = List<SearchHistory>();
     var mapList = await selectMapList();
     mapList.forEach((it) {
-      print('it=====>$it');
+      debugPrint('it=====>$it');
       historyList.add(SearchHistory.fromMapObject(it));
     });
     return historyList;

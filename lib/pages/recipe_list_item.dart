@@ -13,7 +13,6 @@ class TileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//    debugPrint('Data===>$data');
     var img;
     var title;
     var id;
@@ -25,15 +24,12 @@ class TileCard extends StatelessWidget {
         ? double.parse(data['wh_ratio'])
         : double.parse(data['wh_ratio'].toString()); //图片的宽高比
 
-    if (data['video_recipe'] != null) {
-      img = data['video_recipe']['img'];
-      title = data['video_recipe']['title'];
-      id = data['video_recipe']['id'];
-      author = data['video_recipe']['author'];
-      viewedAmount = data['video_recipe']['viewed_amount'];
-      favorAmount = data['video_recipe']['favor_amount'];
-      label = data['video_recipe']['label'];
-    } else if (data['recipe'] != null) {
+    if (data.containsKey('video_recipe')) {
+      //修改map中的键名，方便下一步统一适配
+      data.putIfAbsent("recipe", () => data.remove("video_recipe"));
+    }
+    
+    if (data['recipe'] != null) {
       img = data['recipe']['img'];
       title = data['recipe']['title'];
       id = data['recipe']['id'];
@@ -46,13 +42,7 @@ class TileCard extends StatelessWidget {
     return Card(
       elevation: 1.0,
       child: InkWell(
-        onTap: () {
-          var data = {"id": id};
-          getDataFromServer(Config.RECIPE_DETAIL_URL, data: data).then((val) {
-            Routes.navigateTo(context, '/recipeDetail',
-                params: {'data': convert.jsonEncode(val)});
-          });
-        },
+        onTap: () => _onTapHandler(context, id),
         //点击时出现水波纹效果
         splashColor: Colors.deepOrange.withOpacity(0.3),
         highlightColor: Colors.deepOrange.withOpacity(0.1),
@@ -68,6 +58,15 @@ class TileCard extends StatelessWidget {
     );
   }
 
+  //点击跳转详情界面
+  _onTapHandler(BuildContext context, var id) {
+    var data = {"id": id};
+    getDataFromServer(Config.RECIPE_DETAIL_URL, data: data).then((val) {
+      Routes.navigateTo(context, '/recipeDetail',
+          params: {'data': convert.jsonEncode(val)});
+    });
+  }
+
   Widget _buildImg(BuildContext context, var imgUrl, var id, var ratio) {
     var _itemWidth = (MediaQuery.of(context).size.width - 16) / 2;
     return Hero(
@@ -79,7 +78,7 @@ class TileCard extends StatelessWidget {
         ),
         child: Container(
           width: _itemWidth,
-          height: _itemWidth * ratio,
+          height: _itemWidth / ratio,
           child: CachedNetworkImage(
             imageUrl: imgUrl,
             fit: BoxFit.fill,

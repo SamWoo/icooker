@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:icooker/comment_page_widget/comment_list_item.dart';
+import 'package:icooker/config/Config.dart';
+import 'package:icooker/router/routes.dart';
+import 'package:icooker/services/services_method.dart';
 import 'package:icooker/widgets/loading_widget.dart';
 import 'dart:convert' as convert;
 
@@ -17,6 +24,11 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
   bool isShow = false; //控制显示title标志
   double opacity = 0;
   ScrollController _scrollController;
+  List commentList;
+  var page = 1;
+  var totalPage;
+  var totalAmount;
+  // var itemCount;
 
   @override
   void initState() {
@@ -32,6 +44,21 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
         opacity = tmp < 0.8 ? tmp : 0.8;
       });
     });
+
+    //get comments
+    getDataFromServer(Config.COMMENT_URL, data: {
+      'id': _ret['id'],
+      'filter': 'all',
+      'type': '0',
+      'page': page,
+      'per_page': '10'
+    }).then((val) {
+      setState(() {
+        commentList = val['items'] as List;
+        totalAmount = int.parse(val['total_amount']);
+        totalPage = val['total_page'];
+      });
+    });
   }
 
   @override
@@ -43,7 +70,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       body: _ret == null
           ? LoadingWidget()
           : Stack(
@@ -80,14 +107,15 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
     debugPrint('opacity==$opacity');
     return Container(
       color: Color.fromRGBO(255, 255, 255, opacity),
-      height: kToolbarHeight,
+      padding: EdgeInsets.only(top: 16.0),
+      // height: kToolbarHeight,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           IconButton(
             icon: Icon(
               Icons.arrow_back_ios,
-              color: Colors.grey[700],
+              color: Colors.black87,
             ),
             onPressed: () => Navigator.of(context).pop(),
           ),
@@ -95,7 +123,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
           IconButton(
             icon: Icon(
               Icons.more_horiz,
-              color: Colors.grey[700],
+              color: Colors.black87,
             ),
             onPressed: () {},
           ),
@@ -212,6 +240,19 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
               ],
             ),
           ),
+          Spacer(),
+          ActionChip(
+            label: Text(
+              "+ 关注",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: ScreenUtil().setSp(40),
+              ),
+            ),
+            labelPadding: EdgeInsets.symmetric(horizontal: 8.0),
+            backgroundColor: Color(0xfff76262),
+            onPressed: () {},
+          ),
         ],
       ),
     );
@@ -225,18 +266,26 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
     var zanNum = _ret['zan_num'];
 
     return Container(
-      color: Colors.white,
-      height: ScreenUtil().setHeight(140),
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(width: 0.3, color: Colors.grey),
+      ),
+      height: ScreenUtil().setHeight(120),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          _buildIcon(commentAmount, Icons.chat, Colors.blue),
+          InkWell(
+            onTap: () => _showModalBottomSheet(),
+            child: _buildIcon(
+                commentAmount, FontAwesome.commenting_o, Colors.blue),
+          ),
           SizedBox(width: 8.0),
           _buildIcon(favorAmount, Icons.favorite, Colors.red),
           SizedBox(width: 8.0),
-          _buildIcon(viewedAmount, Icons.visibility, Colors.green),
+          _buildIcon(zanNum, FontAwesome.thumbs_up, Colors.green),
           SizedBox(width: 8.0),
-          _buildIcon(zanNum, Icons.thumb_up, Colors.yellow),
+          _buildIcon(viewedAmount, Icons.visibility, Colors.orange),
         ],
       ),
     );
@@ -262,9 +311,8 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
   ///美食做法步骤
   Widget _buildCookSteps() {
     List cookSteps = _ret['cook_steps'] as List;
-
     return Container(
-      margin: EdgeInsets.symmetric(horizontal:4.0,vertical:8.0),
+      margin: EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),
       child: Column(
         children: cookSteps.map<Widget>((it) {
           return Container(
@@ -310,7 +358,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                 it['title'],
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: ScreenUtil().setSp(56),
+                  fontSize: ScreenUtil().setSp(42),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -323,11 +371,10 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
 
   ///每一步的内容介绍
   Widget _buildStepContent(var it) {
-    var content = it['content'] == null ? "" : it['content'];
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
       child: Text(
-        it['content']??'',
+        it['content'] ?? '',
         maxLines: 10,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
@@ -336,5 +383,69 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
         ),
       ),
     );
+  }
+
+  //评论modal弹窗
+  void _showModalBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      // isScrollControlled: true, //modal是否全屏展示
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0))),
+      builder: (BuildContext context) {
+        return commentList == null
+            ? LoadingWidget()
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(10.0),
+                    height: 48.0,
+                    child: Text(
+                      '全部 $totalAmount 条评论',
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Divider(
+                    height: 1,
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: commentList.length + 1,
+                      itemBuilder: _commentListItem,
+                    ),
+                  ),
+                ],
+              );
+      },
+    );
+  }
+
+  //评论项
+  Widget _commentListItem(BuildContext context, int index) {
+    return index == commentList.length
+        ? GestureDetector(
+            onTap: () => _toCommentListPage(),
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: Center(
+                child: Text('加载更多评论'),
+              ),
+            ),
+          )
+        : CommentListItem(listItem: commentList[index]);
+  }
+
+  //跳转评论列表页面
+  _toCommentListPage() {
+    var data = {
+      'id': _ret['id'],
+      'commentList': commentList,
+      'totalAmount': totalAmount,
+      'totalPage': totalPage
+    };
+    Routes.navigateTo(context, '/comment', params: {'data': json.encode(data)});
   }
 }

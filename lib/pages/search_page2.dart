@@ -73,7 +73,7 @@ class _SearchPageState extends State<SearchPage> {
       flexibleSpace: Image.asset('assets/images/bar.png', fit: BoxFit.cover),
       leading: InkWell(
         child: Icon(Icons.arrow_back_ios, color: Colors.black),
-        onTap: () => Navigator.pop(context),
+        onTap: () => Routes.pop(context),
       ),
       centerTitle: true,
       titleSpacing: 0.0,
@@ -175,6 +175,7 @@ class _SearchPageState extends State<SearchPage> {
               ],
             ),
             _buildHotWords(context),
+            Divider(),
             ListTile(
               dense: true,
               title: Text(
@@ -222,7 +223,10 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildHotItem(BuildContext context, var it) {
     var itemWidth = (MediaQuery.of(context).size.width - 24) / 3;
     return InkWell(
-      onTap: () => _navigationToResult(it['title']),
+      onTap: () {
+        _navigationToResult(it['title']);
+        _saveToDB(it['title']);
+      },
       child: Container(
         width: itemWidth,
         height: itemWidth * 0.75,
@@ -319,13 +323,13 @@ class _SearchPageState extends State<SearchPage> {
           CupertinoButton(
             child: Text('确定!'),
             onPressed: () {
-              Navigator.pop(context);
+              Routes.pop(context);
               _deleteAllHistory();
             },
           ),
           CupertinoButton(
             child: Text('我再想想!'),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Routes.pop(context),
           ),
         ],
       ),
@@ -342,7 +346,7 @@ class _SearchPageState extends State<SearchPage> {
   //跳转搜索结果页面
   _navigationToResult(var searchStr) {
     Fluttertoast.showToast(msg: '搜索关键字-->$searchStr');
-    print('搜索关键字-->$searchStr');
+    // print('搜索关键字-->$searchStr');
     var data = {
       'cid': '',
       'keyword': searchStr,
@@ -375,6 +379,6 @@ class _SearchPageState extends State<SearchPage> {
   //获取随机背景色
   _getRandomColor() {
     return Color.fromARGB(255, Random.secure().nextInt(240),
-        Random.secure().nextInt(240), Random.secure().nextInt(240));
+        Random.secure().nextInt(180), Random.secure().nextInt(240));
   }
 }

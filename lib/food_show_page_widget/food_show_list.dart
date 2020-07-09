@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:icooker/config/Config.dart';
 import 'package:icooker/services/services_method.dart';
@@ -100,10 +101,7 @@ class _FoodShowListState extends State<FoodShowList>
                   controller: _scrollController,
                   crossAxisCount: 4,
                   itemCount: _list.length,
-                  // crossAxisSpacing: 1.0,
-                  // mainAxisSpacing: 2.0,
                   itemBuilder: (BuildContext context, int index) {
-                    // if (index == _list.length - 1) _retrieveData();
                     return FoodShowCard(
                       data: _list[index],
                     );
@@ -111,16 +109,17 @@ class _FoodShowListState extends State<FoodShowList>
                   staggeredTileBuilder: (index) => StaggeredTile.fit(2),
                 ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Offstage(
-            offstage: !isLoading,
-            child: LoadingWidget(),
+        Offstage(
+          offstage: !isLoading,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: SpinKitFadingCircle(
+                color: Colors.red,
+                size: 24.0,
+              ),
+            ),
           ),
-        ),
-        Visibility(
-          visible: false,
-          child: FooterTip(),
         ),
       ],
     );

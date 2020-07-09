@@ -69,7 +69,7 @@ class RecommendData extends StatelessWidget {
       height: ScreenUtil().setHeight(880),
       width: ScreenUtil().setHeight(880) * ratio,
       child: ColorFiltered(
-        colorFilter: ColorFilter.mode(Colors.grey[400], BlendMode.modulate),
+        colorFilter: ColorFilter.mode(Colors.grey[200], BlendMode.modulate),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
           child: CachedNetworkImage(

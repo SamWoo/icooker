@@ -89,14 +89,14 @@ class _ShowState extends State<Show> {
           //选中样式
           labelColor: Colors.black,
           labelStyle: TextStyle(
-            fontSize: ScreenUtil().setSp(40),
+            fontSize: ScreenUtil().setSp(48),
             // color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
           //未选中样式
           unselectedLabelColor: Colors.black54,
           unselectedLabelStyle: TextStyle(
-            fontSize: ScreenUtil().setSp(32),
+            fontSize: ScreenUtil().setSp(40),
             // color: Colors.white,
           ),
         ),

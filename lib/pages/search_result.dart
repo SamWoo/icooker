@@ -6,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:icooker/config/Config.dart';
 import 'package:icooker/pages/recipe_list_item.dart';
+import 'package:icooker/router/routes.dart';
 import 'package:icooker/services/services_method.dart';
 import 'package:icooker/widgets/loading_widget.dart';
 
@@ -98,7 +99,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
       flexibleSpace: Image.asset('assets/images/bar.png', fit: BoxFit.cover),
       leading: InkWell(
         child: Icon(Icons.arrow_back_ios, color: Colors.black),
-        onTap: () => Navigator.pop(context),
+        onTap: () => Routes.pop(context),
       ),
       centerTitle: true,
       titleSpacing: 0.0,

@@ -67,7 +67,12 @@ class Config {
       '/index/categorylist/?source=android&format=json&fc=msjandroid&lat=22.231288&lon=113.278349&cityCode=140&token=';
 
   //搜索结果
-  static const SEARCH_RESULT_URL = '/Search/recipe_7_1_0?source=android&format=json&fc=msjandroid&lat=22.231192&lon=113.278169&cityCode=140&token=';
+  static const SEARCH_RESULT_URL =
+      '/Search/recipe_7_1_0?source=android&format=json&fc=msjandroid&lat=22.231192&lon=113.278169&cityCode=140&token=';
+
+  //菜谱评论
+  static const COMMENT_URL =
+      '/recipe/recipe_pl_list?source=android&format=json&fc=msjandroid&lat=22.231216&lon=113.278165&cityCode=140&token=';
 
   //连接服务器超时时间
   static const CONNECT_TIMEOUT = 10 * 1000;

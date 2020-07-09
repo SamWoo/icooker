@@ -7,14 +7,15 @@ class Routes {
   static Router router;
 
   static String root = '/';
-  static String home='/home';
-  static String search='/search';
+  static String home = '/home';
+  static String search = '/search';
   static String setting = '/setting';
   static String recipeDetail = '/recipeDetail';
   static String imagePreview = '/imagePreview';
   static String webViewPage = '/webViewPage';
   static String categoryPage = '/categoryPage';
   static String searchResultPage = '/searchResult';
+  static String commentPage = '/comment';
 
   static void configureRouters(Router router) {
     router.notFoundHandler = Handler(
@@ -31,12 +32,14 @@ class Routes {
     router.define(webViewPage, handler: webViewPageHandler); //webView显示界面
     router.define(categoryPage, handler: categoryPageHandler); //菜谱分类界面
     router.define(searchResultPage, handler: searchResultHandler); //菜谱分类界面
+    router.define(commentPage, handler: commentPageHandler); //菜谱分类界面
   }
 
   // 对参数进行encode，解决参数中有特殊字符，影响fluro路由匹配
   static Future navigateTo(BuildContext context, String path,
       {Map<String, dynamic> params,
-      TransitionType transition = TransitionType.native}) {
+      TransitionType transition = TransitionType.native,
+      bool clearStack = false}) {
     String query = "";
     if (params != null) {
       int index = 0;
@@ -53,6 +56,12 @@ class Routes {
     }
     print('navigatorTo传递的参数:$query');
     path += query;
-    return router.navigateTo(context, path, transition: transition);
+    return router.navigateTo(context, path,
+        transition: transition, clearStack: clearStack);
+  }
+
+  //关闭当前页面
+  static pop(BuildContext context) {
+    router.pop(context);
   }
 }

@@ -1,6 +1,7 @@
 //setting
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:icooker/comment_page_widget/comment_page.dart';
 import 'package:icooker/food_reviews_page_widget/image_preview.dart';
 import 'package:icooker/pages/category_page.dart';
 import 'package:icooker/pages/home_page.dart';
@@ -60,4 +61,11 @@ Handler searchResultHandler =
   print('handleData====>$params');
   String data = params['data']?.first;
   return SearchResultPage(data: data);
+});
+
+Handler commentPageHandler =
+    Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+  print('handleData====>$params');
+  String data = params['data']?.first;
+  return CommentPage(data: data);
 });

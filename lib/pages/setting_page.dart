@@ -139,7 +139,7 @@ class _SettingPageState extends State<SettingPage> {
               child: Text('Yes!'),
               onPressed: () {
                 Utils.getInstance().clearCache();
-                Navigator.pop(context);
+                Routes.pop(context);
                 Utils.getInstance().loadCache().then((val) {
                   setState(() {
                     cacheSize = val;
@@ -147,7 +147,7 @@ class _SettingPageState extends State<SettingPage> {
                 });
               }),
           CupertinoButton(
-              child: Text('No!'), onPressed: () => Navigator.pop(context)),
+              child: Text('No!'), onPressed: () => Routes.pop(context)),
         ],
       ),
     );

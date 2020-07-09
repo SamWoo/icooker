@@ -36,12 +36,12 @@ class _SplashPageState extends State<SplashPage> {
 
   navigationToHome() {
     _timer.cancel();
-    Routes.navigateTo(context, '/home');
+    Routes.navigateTo(context, '/home', clearStack: true);
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('count===$count');
+    // debugPrint('count===$count');
     return Stack(
       alignment: Alignment(1.0, -1.0),
       children: <Widget>[
@@ -62,7 +62,7 @@ class _SplashPageState extends State<SplashPage> {
               '${count}s',
               style: TextStyle(
                 color: Colors.white,
-                fontSize:14.0, 
+                fontSize: 14.0,
               ),
             ),
           ),

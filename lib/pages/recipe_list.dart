@@ -115,7 +115,7 @@ class _RecipeListState extends State<RecipeList>
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }

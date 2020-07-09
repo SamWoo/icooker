@@ -176,25 +176,33 @@ class _FoodSetPageState extends State<FoodSetPage>
       pinned: true,
       // floating: true,
       delegate: _SliverDelegate(
-        minHeight: 50,
-        maxHeight: 50,
+        minHeight: 48,
+        maxHeight: 48,
         child: PreferredSize(
           //修改TabBar吸顶后的背景颜色和高度
-          child: Material(
-            color: Colors.white,
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 4.0),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/bar04.png'),
+                fit: BoxFit.cover,
+                // colorFilter:
+                //     ColorFilter.mode(Colors.white60, BlendMode.modulate),
+              ),
+            ),
             child: TabBar(
               controller: _tabController,
               tabs: _tabTitles,
               labelColor: Colors.red,
               labelPadding: EdgeInsets.all(2.0),
               labelStyle: TextStyle(
-                fontSize: ScreenUtil().setSp(42),
+                fontSize: ScreenUtil().setSp(56),
                 // color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
               unselectedLabelColor: Colors.black54,
               unselectedLabelStyle: TextStyle(
-                fontSize: ScreenUtil().setSp(36),
+                fontSize: ScreenUtil().setSp(42),
                 // color: Colors.black54,
               ),
               indicatorColor: Colors.red,
@@ -216,7 +224,7 @@ class _FoodSetPageState extends State<FoodSetPage>
       ),
     );
   }
- 
+
   //推荐语
   Widget _slogan() {
     var slogan =

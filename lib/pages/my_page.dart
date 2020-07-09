@@ -10,12 +10,6 @@ class MyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: IconButton(
-        //   icon: Icon(Icons.arrow_back),
-        //   onPressed: () {
-        //     Routes.router.pop(context);
-        //   },
-        // ),
         automaticallyImplyLeading: false,
         title: Text('我的'),
         centerTitle: true,
@@ -64,8 +58,8 @@ class MyPage extends StatelessWidget {
             selected: true,
             leading: Icon(Icons.settings),
             trailing: Icon(Icons.keyboard_arrow_right),
-            title: Text('设置'),
-            onTap: () => Routes.router.navigateTo(context, '/setting'),
+            title: Text('其他'),
+            onTap: (){},
           ),
         ],
       ),

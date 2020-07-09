@@ -124,7 +124,8 @@ class _GuidePageState extends State<GuidePage> {
                       shape: StadiumBorder(),
                       onPressed: () async {
                         await SpHelper.putBool(Config.KEY_FIRST_LOGIN, false);
-                        Routes.router.navigateTo(context, '/home'); // 跳转到主页
+                        Routes.navigateTo(context, '/home',
+                            clearStack: true); // 跳转到主页
                       },
                     ),
                   ),

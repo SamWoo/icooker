@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:icooker/config/Config.dart';
+import 'package:icooker/router/routes.dart';
+import 'package:icooker/services/services_method.dart';
+import 'dart:convert' as convert;
 
 class FoodShowCard extends StatelessWidget {
   final data;
@@ -9,9 +13,11 @@ class FoodShowCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var id = data['works']['id'];
+    debugPrint('works===$data');
     return Card(
       child: InkWell(
-        onTap: () {},
+        onTap: () {}, //=> _onTapHandler(context, id),
         //点击时出现水波纹效果
         splashColor: Colors.deepOrange.withOpacity(0.3),
         highlightColor: Colors.deepOrange.withOpacity(0.1),
@@ -19,7 +25,7 @@ class FoodShowCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            _buildImg(context),
+            _buildImg(context, id),
             _buildDesc(),
           ],
         ),
@@ -27,27 +33,42 @@ class FoodShowCard extends StatelessWidget {
     );
   }
 
-  Widget _buildImg(context) {
-    // debugPrint('ratio====>${data['wh_ratio']}');
+  //点击跳转详情界面
+  _onTapHandler(BuildContext context, var id) {
+    var data = {"id": id};
+    getDataFromServer(Config.RECIPE_DETAIL_URL, data: data).then((val) {
+      Routes.navigateTo(context, '/recipeDetail',
+          params: {'data': convert.jsonEncode(val)});
+    });
+  }
+
+  Widget _buildImg(context, var id) {
+    debugPrint('ratio====>${data['wh_ratio']}');
     var ratio = (data['wh_ratio'] is String)
         ? double.parse(data['wh_ratio'])
         : double.parse(data['wh_ratio'].toString());
     // debugPrint(ratio.runtimeType.toString());
     //每个card的默认宽度
-    var _itemWidth = MediaQuery.of(context).size.width - 16 / 2;
-    return ClipRRect(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(4.0),
-        topRight: Radius.circular(4.0),
-      ),
-      child: CachedNetworkImage(
-        width: _itemWidth,
-        imageUrl: data['works']['img'],
-        fit: BoxFit.cover,
-        placeholder: (context, url) =>
-            Image.asset('assets/images/placeholder.png', fit: BoxFit.cover),
-        errorWidget: (context, url, error) =>
-            Image.asset('assets/images/placeholder.png', fit: BoxFit.fill),
+    var _itemWidth = (MediaQuery.of(context).size.width - 16) / 2;
+    return Hero(
+      tag: id,
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(4.0),
+          topRight: Radius.circular(4.0),
+        ),
+        child: Container(
+          width: _itemWidth,
+          height: _itemWidth / ratio,
+          child: CachedNetworkImage(
+            width: _itemWidth,
+            imageUrl: data['works']['img'],
+            fit: BoxFit.cover,
+            placeholder: (context, url) =>
+                Image.asset('assets/images/placeholder.png', fit: BoxFit.cover),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+          ),
+        ),
       ),
     );
   }
