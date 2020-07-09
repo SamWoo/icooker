@@ -98,12 +98,17 @@ class _CommentPageState extends State<CommentPage> {
         ? LoadingWidget()
         : Stack(
             children: <Widget>[
-              ListView.builder(
-                controller: _scrollController,
-                primary: false,
-                shrinkWrap: true,
-                itemCount: commentList.length + 1,
-                itemBuilder: _commentListItem,
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                margin: EdgeInsets.only(bottom: 48.0),
+                child: ListView.builder(
+                  controller: _scrollController,
+                  primary: false,
+                  shrinkWrap: true,
+                  itemCount: commentList.length + 1,
+                  itemBuilder: _commentListItem,
+                ),
               ),
               Positioned(
                 child: _publishComment(),
@@ -113,24 +118,6 @@ class _CommentPageState extends State<CommentPage> {
               ),
             ],
           );
-    // Column(
-    //     children: <Widget>[
-    //       Expanded(
-    //         flex: 10,
-    //         child: ListView.builder(
-    //           controller: _scrollController,
-    //           primary: false,
-    //           shrinkWrap: true,
-    //           itemCount: commentList.length + 1,
-    //           itemBuilder: _commentListItem,
-    //         ),
-    //       ),
-    //       Expanded(
-    //         child: _publishComment(),
-    //         flex: 1,
-    //       )
-    //     ],
-    //   );
   }
 
   Widget _commentListItem(BuildContext context, int index) {
