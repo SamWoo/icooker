@@ -1,14 +1,15 @@
+import 'dart:convert' as convert;
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icooker/config/Config.dart';
 import 'package:icooker/router/routes.dart';
 import 'package:icooker/services/services_method.dart';
-import 'dart:convert' as convert;
 
 class RecommendData extends StatelessWidget {
   final data;
-  const RecommendData({this.data});
+  RecommendData({this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +29,7 @@ class RecommendData extends StatelessWidget {
 
   Widget _buildItem(BuildContext context, var item) {
     return GestureDetector(
-      onTap: () {
-        var data = {"id": item['id']};
-        getDataFromServer(Config.RECIPE_DETAIL_URL, data: data).then((val) {
-          Routes.navigateTo(context, '/recipeDetail',
-              params: {'data': convert.jsonEncode(val)});
-        });
-      },
+      onTap: () {}, // => _goToRecipeDetail(context, item),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 4.0),
         child: Stack(
@@ -64,7 +59,7 @@ class RecommendData extends StatelessWidget {
 
   Widget _buildItemImage(var item) {
     //推荐图片
-    var ratio = 0.75;
+    var ratio = 0.7;
     return Container(
       height: ScreenUtil().setHeight(880),
       width: ScreenUtil().setHeight(880) * ratio,
@@ -122,5 +117,13 @@ class RecommendData extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  _goToRecipeDetail(BuildContext context, var item) {
+    var data = {"id": item['id']};
+    getDataFromServer(Config.RECIPE_DETAIL_URL, data: data).then((val) {
+      Routes.navigateTo(context, '/recipeDetail',
+          params: {'data': convert.jsonEncode(val)});
+    });
   }
 }

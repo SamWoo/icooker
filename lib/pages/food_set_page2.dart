@@ -1,22 +1,21 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:icooker/config/Config.dart';
 import 'package:icooker/food_set_page_widget/ad_banner.dart';
 import 'package:icooker/food_set_page_widget/channel.dart';
-import 'package:icooker/pages/recipe_list.dart';
 import 'package:icooker/food_set_page_widget/meals.dart';
 import 'package:icooker/food_set_page_widget/recommend.dart';
-import 'package:icooker/pages/search_page2.dart';
+import 'package:icooker/pages/recipe_list.dart';
+import 'package:icooker/provider/recommend_provider.dart';
 import 'package:icooker/router/routes.dart';
 import 'package:icooker/services/services_method.dart';
 import 'package:icooker/widgets/loading_widget.dart';
-import 'dart:convert';
+import 'package:provider/provider.dart';
 
 class FoodSetPage extends StatefulWidget {
   FoodSetPage({Key key}) : super(key: key);
@@ -30,9 +29,8 @@ class _FoodSetPageState extends State<FoodSetPage>
   static ScrollController _scrollController =
       ScrollController(initialScrollOffset: 0.0);
   TabController _tabController;
-  var pageCount = 2;
-  var page;
-  var data;
+  //provider
+  RecommendModel model = RecommendModel();
 
   var _tabTitles = [
     Tab(text: '推荐'),
@@ -43,7 +41,7 @@ class _FoodSetPageState extends State<FoodSetPage>
     Tab(text: '烘焙'),
   ];
 
-  var _RecipeList = [
+  var _recipeList = [
     RecipeList(data: {'type': '', 'page': 1}),
 //    RecipeList(data: {'type': '211', 'page': 1}),
     RecipeList(data: {'type': '210', 'page': 1}),
@@ -52,21 +50,13 @@ class _FoodSetPageState extends State<FoodSetPage>
     RecipeList(data: {'type': '208', 'page': 1}),
   ];
 
-  var _recommendData;
-
   @override
   void initState() {
     super.initState();
-
     _tabController = TabController(length: _tabTitles.length, vsync: this);
 
-    //服务器获取数据
-    getDataFromServer(Config.INDEX_HOME_RECOMMEND_URL).then((val) {
-      //推荐数据
-      setState(() {
-        _recommendData = (val as List);
-      });
-    });
+    //初始化加载数据
+    model.loadRecommendData(Config.INDEX_HOME_RECOMMEND_URL);
   }
 
   @override
@@ -81,17 +71,23 @@ class _FoodSetPageState extends State<FoodSetPage>
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: _buildAppBar(),
-      body: _recommendData == null
-          ? LoadingWidget()
-          : CustomScrollView(
-              controller: _scrollController,
-              slivers: <Widget>[
-                _buildRecommend(),
-                _buildPersistentHeader(),
-                _buildSliverBody(),
-                // _buildFooter(),
-              ],
-            ),
+      body: ChangeNotifierProvider<RecommendModel>(
+        create: (_) => model,
+        child: Consumer<RecommendModel>(
+          builder: (_, model, child) {
+            return model.recommendData == null
+                ? LoadingWidget()
+                : CustomScrollView(
+                    controller: _scrollController,
+                    slivers: <Widget>[
+                      _buildRecommend(),
+                      _buildPersistentHeader(),
+                      _buildSliverBody(),
+                    ],
+                  );
+          },
+        ),
+      ),
     );
   }
 
@@ -116,7 +112,6 @@ class _FoodSetPageState extends State<FoodSetPage>
               color: Colors.grey[100]),
           child: InkWell(
             onTap: () {
-//              Fluttertoast.showToast(msg: '点击搜索按钮');
               // showSearch(context: context, delegate: SearchPage());
               getHotWords(Config.SEARCH_HOT_WORDS_URL).then((val) {
                 Routes.navigateTo(context, '/search',
@@ -161,10 +156,10 @@ class _FoodSetPageState extends State<FoodSetPage>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             //  _slogan(),
-            RecommendData(data: _recommendData[1]['video_info']),
-            Channel(data: _recommendData[2]['channel']),
-            Meals(_recommendData[3]['sancan']),
-            AdBanner(data: _recommendData[4]['zhuanti']),
+            RecommendData(data: model.recommendData[1]['video_info']),
+            Channel(data: model.recommendData[2]['channel']),
+            Meals(data: model.recommendData[3]['sancan']),
+            AdBanner(data: model.recommendData[4]['zhuanti']),
           ],
         ),
       ),
@@ -220,7 +215,7 @@ class _FoodSetPageState extends State<FoodSetPage>
     return SliverFillRemaining(
       child: TabBarView(
         controller: _tabController,
-        children: _RecipeList,
+        children: _recipeList,
       ),
     );
   }
@@ -228,7 +223,7 @@ class _FoodSetPageState extends State<FoodSetPage>
   //推荐语
   Widget _slogan() {
     var slogan =
-        _recommendData[0]['recommend_info']['recommend_text'].substring(1);
+        model.recommendData[0]['recommend_info']['recommend_text'].substring(1);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Text(

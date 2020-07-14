@@ -99,7 +99,7 @@ class _CategoryPageState extends State<CategoryPage> {
     var item = _dataList[index];
     return GestureDetector(
       onTap: () {
-        print('点击了-->${item['title']}');
+        debugPrint('点击了-->${item['title']}');
         setState(() {
           _selected = index;
           _subCatesList.clear();
@@ -176,8 +176,8 @@ class _CategoryPageState extends State<CategoryPage> {
 
   //跳转搜索结果页面
   _navigationToResult(var it) {
-    Fluttertoast.showToast(msg: '点击子类-->${it['title']}');
-    print('点击子类菜谱-->${it['title']}');
+    // Fluttertoast.showToast(msg: '点击子类-->${it['title']}');
+    // debugPrint('点击子类菜谱-->${it['title']}');
     var data = {
       'cid': it['id'],
       'keyword': it['title'],

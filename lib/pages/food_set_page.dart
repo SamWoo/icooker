@@ -168,7 +168,7 @@ class _FoodSetPageState extends State<FoodSetPage>
 //              _slogan(),
               RecommendData(data:_recommendData[1]['video_info']),
               Channel(data:_recommendData[2]['channel']),
-              Meals(_recommendData[3]['sancan']),
+              Meals(data:_recommendData[3]['sancan']),
               AdBanner(data:_recommendData[4]['zhuanti']),
             ],
           ),

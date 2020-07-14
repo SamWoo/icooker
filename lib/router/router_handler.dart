@@ -7,7 +7,7 @@ import 'package:icooker/pages/category_page.dart';
 import 'package:icooker/pages/home_page.dart';
 import 'package:icooker/pages/recipe_detail_page.dart';
 import 'package:icooker/pages/search_page2.dart';
-import 'package:icooker/pages/search_result.dart';
+import 'package:icooker/pages/search_result2.dart';
 import 'package:icooker/pages/setting_page.dart';
 import 'package:icooker/pages/webview_page.dart';
 

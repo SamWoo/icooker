@@ -8,7 +8,7 @@ import 'dart:convert' as convert;
 
 class Meals extends StatefulWidget {
   final data;
-  Meals(this.data);
+  Meals({this.data});
 
   @override
   _MealsState createState() => _MealsState();

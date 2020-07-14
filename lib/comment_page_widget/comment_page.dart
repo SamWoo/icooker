@@ -151,7 +151,14 @@ class _CommentPageState extends State<CommentPage> {
   //发表评论
   Widget _publishComment() {
     return Container(
-      decoration: BoxDecoration(color: Colors.grey[200]),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(width: 0.5, color: Colors.grey[700]),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10.0),
+          topRight: Radius.circular(10.0),
+        ),
+      ),
       padding: EdgeInsets.all(8.0),
       height: 48.0,
       child: Row(
@@ -167,7 +174,7 @@ class _CommentPageState extends State<CommentPage> {
           Expanded(
             child: TextField(
               // controller: _controller,
-              textInputAction: TextInputAction.search,
+              textInputAction: TextInputAction.send,
               minLines: 1,
               maxLines: 1,
               cursorColor: Colors.red,
@@ -177,12 +184,10 @@ class _CommentPageState extends State<CommentPage> {
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                 hintText: "来说点什么吧！",
-                // border: InputBorder.none,
+                border: InputBorder.none,
               ),
               onChanged: (v) {},
-              onEditingComplete: () {
-                // _actionDone(context);
-              },
+              onEditingComplete: () {},
             ),
           )
         ],

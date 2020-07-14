@@ -345,7 +345,7 @@ class _SearchPageState extends State<SearchPage> {
 
   //跳转搜索结果页面
   _navigationToResult(var searchStr) {
-    Fluttertoast.showToast(msg: '搜索关键字-->$searchStr');
+    // Fluttertoast.showToast(msg: '搜索关键字-->$searchStr');
     // print('搜索关键字-->$searchStr');
     var data = {
       'cid': '',

@@ -60,6 +60,11 @@ dependencies:
   path_provider: ^1.6.11
   # add sqflite
   sqflite: ^1.3.1
+  # add chewie
+  chewie: ^0.9.10
+  # add video_player
+  video_player: ^0.10.11+2
+
   
 dev_dependencies:
   flutter_test:
