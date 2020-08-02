@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:icooker/config/Config.dart';
 import 'package:icooker/food_show_page_widget/food_show_tab.dart';
+import 'package:icooker/pages/webview_page.dart';
 
 class FoodShowPage extends StatefulWidget {
   FoodShowPage({Key key}) : super(key: key);
@@ -40,8 +42,12 @@ class _FoodShowPageState extends State<FoodShowPage>
         physics: NeverScrollableScrollPhysics(),
         children: [
           Show(),
-          Center(child: Text('食杰')),
-          Center(child: Text('任务中心')),
+          WebViewPage(
+              data: {'initUrl': Config.FOOD_KING_URL, 'showBar': false}),
+          WebViewPage(
+              data: {'initUrl': Config.FOOD_TASK_URL, 'showBar': false}),
+          // Center(child: Text('食杰')),
+          // Center(child: Text('任务中心')),
         ],
       ),
     );

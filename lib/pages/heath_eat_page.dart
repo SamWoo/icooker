@@ -23,13 +23,6 @@ class _HeathEatPageState extends State<HeathEatPage> {
           _ret = MOCKDATA.HEALEAT_DATA['data'];
           _dataList = _ret['items'] as List;
         }));
-
-    // getDataFromServer(Config.HEATH_EAT_URL).then((val) {
-    //   setState(() {
-    //     _ret = val;
-    //     _dataList = val['items'] as List;
-    //   });
-    // });
   }
 
   Future<void> _onRefresh() async {
@@ -101,11 +94,14 @@ class _HeathEatPageState extends State<HeathEatPage> {
     return Container(
       child: Stack(
         children: <Widget>[
-          Image.asset(
-            'assets/images/scene.png',
-            fit: BoxFit.fill,
-            height: double.infinity,
-            width: double.infinity,
+          ColorFiltered(
+            colorFilter: ColorFilter.mode(Colors.grey[400], BlendMode.modulate),
+            child: Image.asset(
+              'assets/images/scene.png',
+              fit: BoxFit.fill,
+              height: double.infinity,
+              width: double.infinity,
+            ),
           ),
           Positioned(
             bottom: 24.0,

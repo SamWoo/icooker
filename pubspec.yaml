@@ -30,7 +30,7 @@ dependencies:
   # add dio
   dio: ^3.0.9
   # add flutter_staggered_grid_view
-  flutter_staggered_grid_view: ^0.3.0
+  flutter_staggered_grid_view: ^0.3.1
   # add json_annotation
   json_annotation: ^3.0.1
   # add shared preferences plugin

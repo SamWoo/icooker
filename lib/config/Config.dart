@@ -77,6 +77,14 @@ class Config {
   static const COMMENT_URL =
       '/recipe/recipe_pl_list?source=android&format=json&fc=msjandroid&lat=22.231216&lon=113.278165&cityCode=140&token=';
 
+  static const USER_URL =
+      '/user/mobile_code?source=android&format=json&fc=msjandroid&lat=22.231011&lon=113.278736&cityCode=140&token=';
+
+  static const FOOD_KING_URL =
+      'https://apph5.meishi.cc/king_of_food/food_king_two.php?token=&phone_model=android';
+  static const FOOD_TASK_URL =
+      'https://apph5.meishi.cc/king_of_food/task_two.php?token=&phone_model=android';
+
   //连接服务器超时时间
   static const CONNECT_TIMEOUT = 10 * 1000;
 

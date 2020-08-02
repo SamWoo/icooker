@@ -41,7 +41,7 @@ class _FoodShowListState extends State<FoodShowList>
     data = widget.data;
     page = data['page'];
 
-    print('data====$data');
+    debugPrint('foodShowData====>$data');
 
     _scrollController.addListener(() {
       var maxPosition = _scrollController.position.maxScrollExtent;
@@ -61,8 +61,13 @@ class _FoodShowListState extends State<FoodShowList>
     //获取初始数据
     getDataFromServer(Config.FOOD_SHOW_DATA_URL, data: data).then((val) {
       // debugPrint('------>>$val');
+      var tempList = val['items'] as List;
+      tempList.forEach((it) {
+        //屏蔽广告信息
+        if (it.containsKey('ad')) tempList.remove(it);
+      });
       setState(() {
-        _list = val['items'] as List;
+        _list = tempList;
       });
       // debugPrint('>>>>>> $_list');
     });
