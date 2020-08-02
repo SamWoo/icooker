@@ -1,10 +1,16 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:icooker/config/Config.dart';
+import 'package:icooker/provider/login_provider.dart';
 import 'package:icooker/router/routes.dart';
+import 'package:icooker/utils/spHelper.dart';
+import 'package:provider/provider.dart';
 
 class MyPage extends StatelessWidget {
-  const MyPage({Key key}) : super(key: key);
+  MyPage({Key key}) : super(key: key);
+
+  LoginProvider provider = LoginProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +20,6 @@ class MyPage extends StatelessWidget {
         title: Text('我的'),
         centerTitle: true,
         elevation: 0,
-        // backgroundColor: Colors.transparent,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,11 +36,20 @@ class MyPage extends StatelessWidget {
               Positioned(
                 left: 12,
                 top: 0,
-                child: CircleAvatar(
-                  radius: 32.0,
-                  backgroundImage: NetworkImage(
-                      'http://9.onn9.com/2016/10/85c76e5623b1b443bcdb7afe2a951cd5.jpg'),
-                ),
+                child: SpHelper.getBool(Config.KEY_IS_LOGIN, defValue: false)
+                    ? CircleAvatar(
+                        radius: 32.0,
+                        backgroundImage: NetworkImage(
+                            'http://9.onn9.com/2016/10/85c76e5623b1b443bcdb7afe2a951cd5.jpg'),
+                      )
+                    : GestureDetector(
+                        onTap: () => Routes.navigateTo(context, '/login'),
+                        child: CircleAvatar(
+                          radius: 32.0,
+                          backgroundImage:
+                              AssetImage('assets/images/avatar.jpg'),
+                        ),
+                      ),
               ),
             ],
           ),
@@ -59,7 +73,7 @@ class MyPage extends StatelessWidget {
             leading: Icon(Icons.settings),
             trailing: Icon(Icons.keyboard_arrow_right),
             title: Text('其他'),
-            onTap: (){},
+            onTap: () {},
           ),
         ],
       ),

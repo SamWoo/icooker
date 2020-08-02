@@ -5,7 +5,9 @@ import 'package:icooker/comment_page_widget/comment_page.dart';
 import 'package:icooker/food_reviews_page_widget/image_preview.dart';
 import 'package:icooker/pages/category_page.dart';
 import 'package:icooker/pages/home_page.dart';
+import 'package:icooker/pages/login_page.dart';
 import 'package:icooker/pages/recipe_detail_page.dart';
+import 'package:icooker/pages/register_page.dart';
 import 'package:icooker/pages/search_page2.dart';
 import 'package:icooker/pages/search_result2.dart';
 import 'package:icooker/pages/setting_page.dart';
@@ -14,6 +16,16 @@ import 'package:icooker/pages/webview_page.dart';
 Handler homeHandler =
     Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
   return HomePage();
+});
+
+Handler loginHandler =
+    Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+  return LoginPage();
+});
+
+Handler registerHandler =
+    Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+  return RegisterPage();
 });
 
 Handler searchHandler =

@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 
 class Config {
   //默认请求地址
-  static const BASE_URL = ""; //自行抓包
+  static const BASE_URL = "https://newapi.meishi.cc"; //自行抓包
+
+  //login
+  static const LOGIN_URL = '';
 
   //首页推荐
   static const INDEX_HOME_RECOMMEND_URL =
@@ -103,4 +106,6 @@ class Config {
   // Theme Color Key
   static const KEY_THEME_COLOR = 'key_theme_color';
   static const KEY_FIRST_LOGIN = 'key_first_login';
+  static const KEY_TOKEN = 'token';
+  static const KEY_IS_LOGIN = 'is_login';
 }

@@ -47,7 +47,10 @@ dependencies:
   photo_view: ^0.9.1
   # add toast
   fluttertoast: ^4.0.0
+  # add icons
   flutter_icons: ^1.0.0+1
+  # add font_awesome
+  font_awesome_flutter: ^8.8.1
   # add cookie_manager
   dio_cookie_manager: ^1.0.0
   # add cookie_jar

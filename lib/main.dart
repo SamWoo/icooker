@@ -9,7 +9,6 @@ import 'package:icooker/router/routes.dart';
 import 'package:provider/provider.dart';
 
 import 'config/Config.dart';
-import 'pages/home_page.dart';
 import 'provider/app_info_provider.dart';
 import 'utils/spHelper.dart';
 

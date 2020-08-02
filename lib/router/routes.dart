@@ -8,6 +8,8 @@ class Routes {
 
   static String root = '/';
   static String home = '/home';
+  static String login = '/login';
+  static String register = '/register';
   static String search = '/search';
   static String setting = '/setting';
   static String recipeDetail = '/recipeDetail';
@@ -25,14 +27,16 @@ class Routes {
     });
 
     router.define(home, handler: homeHandler); //首页界面
-    router.define(search, handler: searchHandler); //首页界面
+    router.define(login, handler: loginHandler); //登录界面
+    router.define(register, handler: registerHandler); //注册界面
+    router.define(search, handler: searchHandler); //搜索界面
     router.define(setting, handler: settingHandler); //设置界面
     router.define(recipeDetail, handler: recipeDetailHandler); //菜谱详情界面
     router.define(imagePreview, handler: imagePreviewHandler); //图片预览界面
     router.define(webViewPage, handler: webViewPageHandler); //webView显示界面
     router.define(categoryPage, handler: categoryPageHandler); //菜谱分类界面
-    router.define(searchResultPage, handler: searchResultHandler); //菜谱分类界面
-    router.define(commentPage, handler: commentPageHandler); //菜谱分类界面
+    router.define(searchResultPage, handler: searchResultHandler); //搜索结果界面
+    router.define(commentPage, handler: commentPageHandler); //评论界面
   }
 
   // 对参数进行encode，解决参数中有特殊字符，影响fluro路由匹配

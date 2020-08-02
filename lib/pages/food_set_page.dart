@@ -7,10 +7,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:icooker/config/Config.dart';
 import 'package:icooker/food_set_page_widget/ad_banner.dart';
 import 'package:icooker/food_set_page_widget/channel.dart';
-import 'package:icooker/pages/recipe_list.dart';
 import 'package:icooker/food_set_page_widget/meals.dart';
 import 'package:icooker/food_set_page_widget/recommend.dart';
-import 'package:icooker/pages/search_page.dart';
+import 'package:icooker/pages/recipe_list.dart';
 import 'package:icooker/router/routes.dart';
 import 'package:icooker/services/services_method.dart';
 import 'package:icooker/widgets/loading_widget.dart';
@@ -115,7 +114,7 @@ class _FoodSetPageState extends State<FoodSetPage>
             onTap: () {
               // Fluttertoast.showToast(msg: '点击搜索按钮');
               // showSearch(context: context, delegate: SearchPage());
-               getHotWords(Config.SEARCH_HOT_WORDS_URL).then((val) {
+              getHotWords(Config.SEARCH_HOT_WORDS_URL).then((val) {
                 Routes.navigateTo(context, '/search',
                     params: {'data': json.encode(val)});
               });
@@ -166,10 +165,10 @@ class _FoodSetPageState extends State<FoodSetPage>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
 //              _slogan(),
-              RecommendData(data:_recommendData[1]['video_info']),
-              Channel(data:_recommendData[2]['channel']),
-              Meals(data:_recommendData[3]['sancan']),
-              AdBanner(data:_recommendData[4]['zhuanti']),
+              RecommendData(data: _recommendData[1]['video_info']),
+              Channel(data: _recommendData[2]['channel']),
+              Meals(data: _recommendData[3]['sancan']),
+              AdBanner(data: _recommendData[4]['zhuanti']),
             ],
           ),
         ),
