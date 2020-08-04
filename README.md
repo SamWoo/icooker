@@ -8,7 +8,7 @@
 
 + 效果图 
 
-![效果图](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzEwNjYzOTc1LTQ1NTMzNWMyZTRlZDUzZjUuZ2lm#pic_center)
+![效果图](http://upload-images.jianshu.io/upload_images/10663975-455335c2e4ed53f5.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1080/q/50)
 
 #### 目前已经完成的功能及页面：  
 + [x] 闪屏广告页
