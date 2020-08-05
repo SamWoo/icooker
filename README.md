@@ -8,7 +8,7 @@
 
 + 效果图 
 
-![效果图](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzEwNjYzOTc1LTQ1NTMzNWMyZTRlZDUzZjUuZ2lm#pic_center)
+![效果图](http://upload-images.jianshu.io/upload_images/10663975-455335c2e4ed53f5.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1080/q/50)
 
 #### 目前已经完成的功能及页面：  
 + [x] 闪屏广告页
@@ -30,9 +30,9 @@
 + [x] 缓存清理功能
 + [x] 登录页面
 + [x] 注册页面
++ [x] 食秀页面--食杰
++ [x] 食秀页面 --任务中心
 #### 未完成功能及页面
-+ [ ] 食秀页面--食杰
-+ [ ] 食秀页面 --任务中心
 + [ ] 多语言功能
 + [ ] 发表评论功能
 + [ ] 发表美食作品功能
