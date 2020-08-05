@@ -60,7 +60,9 @@ class Config {
   //channel渠道位的url
   static const DAILYWELFARE_URL =
       'https://apph5.meishi.cc/tbk/dailywelfare.php'; //每日福利
+
   static const WEEK_RANK_URL = 'https://apph5.meishi.cc/top/week.php'; //本周流行菜谱
+
   //搜索热词
   static const SEARCH_HOT_WORDS_URL =
       '/search/hot_words?source=android&format=json&fc=msjandroid&lat=22.231214&lon=113.278212&cityCode=140&token=';
@@ -77,11 +79,19 @@ class Config {
   static const COMMENT_URL =
       '/recipe/recipe_pl_list?source=android&format=json&fc=msjandroid&lat=22.231216&lon=113.278165&cityCode=140&token=';
 
+  //登录
   static const USER_URL =
       '/user/mobile_code?source=android&format=json&fc=msjandroid&lat=22.231011&lon=113.278736&cityCode=140&token=';
 
+  //食秀
+  static const FOOD_SHOW_URL =
+      'https://apph5.meishi.cc/app_index/foodshow.php?token=&phone_model=android';
+
+  //食杰
   static const FOOD_KING_URL =
       'https://apph5.meishi.cc/king_of_food/food_king_two.php?token=&phone_model=android';
+
+  //任务中心
   static const FOOD_TASK_URL =
       'https://apph5.meishi.cc/king_of_food/task_two.php?token=&phone_model=android';
 

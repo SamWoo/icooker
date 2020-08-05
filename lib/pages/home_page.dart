@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icooker/pages/food_set_page2.dart';
-import 'package:icooker/pages/food_show_page.dart';
+import 'package:icooker/pages/food_show_page2.dart';
 
 import 'food_reviews_page.dart';
 import 'heath_eat_page.dart';
