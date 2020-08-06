@@ -3,7 +3,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:icooker/config/Config.dart';
 import 'package:icooker/services/services_method.dart';
-import 'package:icooker/widgets/footer_tip.dart';
 import 'package:icooker/widgets/loading_widget.dart';
 
 import 'food_show_list_item.dart';
