@@ -6,9 +6,20 @@
 
 > 目前已完成大约70%的功能，后续有空会继续完善剩余功能。
 
-+ 效果图 
++ Gif效果图 
 
-![效果图](http://upload-images.jianshu.io/upload_images/10663975-455335c2e4ed53f5.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1080/q/50)
+![Gif效果图](http://upload-images.jianshu.io/upload_images/10663975-455335c2e4ed53f5.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1080/q/50)
+
++ 各分页效果图
+
+xx|xx|xx|xx|
+|:--:|:--:|:--:|:--:|
+|<img src="screenshot/1.jpg" width="180" height="360" alt="广告页"/>|<img src="screenshot/2.jpg" width="180" height="360" alt="首页"/>|<img src="screenshot/3.jpg" width="180" height="360" alt="搜索页"/>|<img src="screenshot/4.jpg" width="180" height="360" alt="菜谱详情页"/>
+|<img src="screenshot/5.jpg" width="180" height="360" alt="评论页"/>|<img src="screenshot/6.jpg" width="180" height="360" alt="评论详情页"/>|<img src="screenshot/7.jpg" width="180" height="360" alt="食秀界面"/>|<img src="screenshot/8.jpg" width="180" height="360" alt="食集界面"/>
+|<img src="screenshot/9.jpg" width="180" height="360" alt="任务界面"/>|<img src="screenshot/10.jpg" width="180" height="360" alt="食记页"/>|<img src="screenshot/11.jpg" width="180" height="360" alt="健康饮食页"/>|<img src="screenshot/12.jpg" width="180" height="360" alt="个人页面"/>
+|<img src="screenshot/13.jpg" width="180" height="360" alt="设置页面"/>|<img src="screenshot/14.jpg" width="180" height="360" alt="菜谱分类页"/>|<img src="screenshot/15.jpg" width="180" height="360" alt="福利购物页"/>|<img src="screenshot/16.jpg" width="180" height="360" alt="本周热菜界面"/>
+|<img src="screenshot/17.jpg" width="180" height="360" alt="登录界面"/>|<img src="screenshot/18.jpg" width="180" height="360" alt="注册界面"/>|<img src="screenshot/19.jpg" width="180" height="360" alt="清除缓存"/>|<img src="screenshot/20.jpg" width="180" height="360" alt="粉丝购页面"/>
+|<img src="screenshot/21.jpg" width="180" height="360" alt="清除搜索记录"/>|<img src="screenshot/22.jpg" width="180" height="360" alt="oops"/>|<img src="screenshot/23.jpg" width="180" height="360" alt="oops"/>|<img src="screenshot/24.jpg" width="180" height="360" alt="oops"/>
 
 #### 目前已经完成的功能及页面：  
 + [x] 闪屏广告页
