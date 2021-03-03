@@ -260,10 +260,10 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
 
   //点赞等信息
   Widget _buildFavor() {
-    var favorAmount = _ret['favor_amount'];
-    var viewedAmount = _ret['viewed_amount'];
-    var commentAmount = _ret['comment_amount'];
-    var zanNum = _ret['zan_num'];
+    var favorAmount = _ret['favor_amount'].toString();
+    var viewedAmount = _ret['viewed_amount'].toString();
+    var commentAmount = _ret['comment_amount'].toString();
+    var zanNum = _ret['zan_num'].toString();
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.0),

@@ -3,16 +3,22 @@ import 'dart:convert' as convert;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:icooker/config/Config.dart';
 import 'package:icooker/router/routes.dart';
-import 'package:icooker/services/services_method.dart';
 
-class RecommendData extends StatelessWidget {
+class RecommendData extends StatefulWidget {
   final data;
   RecommendData({this.data});
 
   @override
+  _RecommendDataState createState() => _RecommendDataState();
+}
+
+class _RecommendDataState extends State<RecommendData> {
+  bool isPlay = false; //是否正在播放
+
+  @override
   Widget build(BuildContext context) {
+    final data = widget.data;
     return Container(
       height: ScreenUtil().setHeight(880),
       width: double.infinity,
@@ -28,41 +34,70 @@ class RecommendData extends StatelessWidget {
   }
 
   Widget _buildItem(BuildContext context, var item) {
-    return GestureDetector(
-      onTap: () {}, // => _goToRecipeDetail(context, item),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 4.0),
-        child: Stack(
-          children: <Widget>[
-            _buildItemImage(item),
-            Positioned(
-              top: 10.0,
-              left: 10.0,
-              child: Text(
-                item['recommend_title'],
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0,
-                ),
+    var ratio = 0.7;
+    return Container(
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.0)),
+      height: ScreenUtil().setHeight(880),
+      width: ScreenUtil().setHeight(880) * ratio,
+      padding: EdgeInsets.symmetric(horizontal: 4.0),
+      child: Stack(
+        children: <Widget>[
+          _buildItemImage(item),
+          Positioned(
+            top: 10.0,
+            left: 10.0,
+            child: Text(
+              item['recommend_title'],
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
               ),
             ),
-            Positioned(
-              bottom: 10.0,
-              left: 10.0,
-              child: _buildInfo(item),
-            ),
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: 10.0,
+            left: 10.0,
+            child: _buildInfo(item),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: _buildPlayButton(item),
+          ),
+        ],
       ),
     );
   }
 
+  ///播放按钮
+  Widget _buildPlayButton(var item) {
+    return item['video']['vendor_video'] == null
+        ? Container()
+        : GestureDetector(
+            onTap: () => _goToChewiePage(context, item),
+            child: Container(
+              alignment: Alignment.center,
+              height: ScreenUtil().setHeight(160.0),
+              width: ScreenUtil().setWidth(160.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  ScreenUtil().setWidth(80.0),
+                ),
+                color: Colors.black54,
+              ),
+              child: Icon(
+                Icons.play_arrow,
+                size: 42,
+                color: Colors.white,
+              ),
+            ),
+          );
+  }
+
+  ///推荐图片
   Widget _buildItemImage(var item) {
-    //推荐图片
-    var ratio = 0.7;
     return Container(
-      height: ScreenUtil().setHeight(880),
-      width: ScreenUtil().setHeight(880) * ratio,
+      height: double.infinity,
+      width: double.infinity,
       child: ColorFiltered(
         colorFilter: ColorFilter.mode(Colors.grey[200], BlendMode.modulate),
         child: ClipRRect(
@@ -82,8 +117,8 @@ class RecommendData extends StatelessWidget {
     );
   }
 
+  ///推荐图片的info
   Widget _buildInfo(var item) {
-    //推荐图片的info
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -119,11 +154,9 @@ class RecommendData extends StatelessWidget {
     );
   }
 
-  _goToRecipeDetail(BuildContext context, var item) {
-    var data = {"id": item['id']};
-    getDataFromServer(Config.RECIPE_DETAIL_URL, data: data).then((val) {
-      Routes.navigateTo(context, '/recipeDetail',
-          params: {'data': convert.jsonEncode(val)});
-    });
+  ///跳转视频播放页
+  _goToChewiePage(BuildContext context, var item) {
+    Routes.navigateTo(context, '/chewiePage',
+        params: {'data': convert.jsonEncode(item)});
   }
 }

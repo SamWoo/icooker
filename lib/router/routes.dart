@@ -18,6 +18,7 @@ class Routes {
   static String categoryPage = '/categoryPage';
   static String searchResultPage = '/searchResult';
   static String commentPage = '/comment';
+  static String chewiePage = '/chewiePage';
 
   static void configureRouters(Router router) {
     router.notFoundHandler = Handler(
@@ -37,6 +38,7 @@ class Routes {
     router.define(categoryPage, handler: categoryPageHandler); //菜谱分类界面
     router.define(searchResultPage, handler: searchResultHandler); //搜索结果界面
     router.define(commentPage, handler: commentPageHandler); //评论界面
+    router.define(chewiePage, handler: chewiePageHandler); //
   }
 
   // 对参数进行encode，解决参数中有特殊字符，影响fluro路由匹配

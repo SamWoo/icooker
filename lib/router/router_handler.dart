@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:icooker/comment_page_widget/comment_page.dart';
 import 'package:icooker/food_reviews_page_widget/image_preview.dart';
 import 'package:icooker/pages/category_page.dart';
+import 'package:icooker/pages/chewie_page.dart';
 import 'package:icooker/pages/home_page.dart';
 import 'package:icooker/pages/login_page.dart';
 import 'package:icooker/pages/recipe_detail_page.dart';
@@ -80,4 +81,11 @@ Handler commentPageHandler =
   print('handleData====>$params');
   String data = params['data']?.first;
   return CommentPage(data: data);
+});
+
+Handler chewiePageHandler =
+    Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+  print('handleData====>$params');
+  String data = params['data']?.first;
+  return ChewiePage(data: data);
 });
