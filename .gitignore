@@ -31,6 +31,7 @@
 /build/
 /lib/config/Config.dart
 pubspec.lock
+/screenshot/
 
 # Web related
 lib/generated_plugin_registrant.dart
