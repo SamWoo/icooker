@@ -21,10 +21,10 @@ class _ChewiePageState extends State<ChewiePage> {
     super.initState();
     final data = convert.jsonDecode(widget.data);
     _videoPlayerController =
-        VideoPlayerController.network(data['video']['vendor_video'])
-          ..initialize().then((_) {
-            setState(() {});
-          });
+        VideoPlayerController.network(data['video']['vendor_video']);
+    // ..initialize().then((_) {
+    //   setState(() {});
+    // });
 
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
